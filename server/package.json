@@ -1,0 +1,21 @@
+{
+  "name": "request4learning",
+  "version": "1.0.0",
+  "description": "The Bachelor Thesis project of Robert Dimitrov",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/robert_dimitrov/request4learning.git"
+  },
+  "keywords": [
+    "request4learning",
+    "game-based-learning",
+    "e-learning"
+  ],
+  "author": "Robert Dimitrov",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/robert_dimitrov/request4learning#readme"
+}
