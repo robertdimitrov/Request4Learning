@@ -4,7 +4,8 @@
   "description": "The Bachelor Thesis project of Robert Dimitrov",
   "main": "app.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,17 @@
   ],
   "author": "Robert Dimitrov",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/robert_dimitrov/request4learning#readme"
+  "homepage": "https://bitbucket.org/robert_dimitrov/request4learning#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.10"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-util": "^3.0.8",
+    "jshint": "^2.9.5",
+    "jshint-stylish": "^2.2.1"
+  }
 }
