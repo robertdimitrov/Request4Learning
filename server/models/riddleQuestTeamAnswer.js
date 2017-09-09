@@ -8,7 +8,7 @@ const RiddleQuestTeamAnswerSchema = new Schema({
 	teamID: { type: String, required: true },
 	riddleID: { type: String, required: true },
 	answer: { type: String, required: true },
-	dateSubmitted: { type: Date, default: Date.now() }
+	dateSubmitted: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('RiddleQuestTeamAnswer', RiddleQuestTeamAnswerSchema)

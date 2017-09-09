@@ -8,7 +8,7 @@ const ForumTopicReplySchema = new Schema({
 	topicID: { type: String, required: true },
 	authorID: { type: String, required: true },
 	text: { type: String, required: true },
-	dateAdded: { type: Date, default: Date.now() },
+	dateAdded: { type: Date, default: Date.now },
 	isTeacherApproved: { type: Boolean, default: false },
 	isAuthorApproved: { type: Boolean, default: false }
 })

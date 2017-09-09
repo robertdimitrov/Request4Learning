@@ -8,7 +8,7 @@ const TeamCommentSchema = new Schema({
 	teamID: { type: String, required: true },
 	authorID: { type: String, required: true },
 	text: { type: String, required: true }, 
-	dateAdded: { type: Date, default: Date.now() }
+	dateAdded: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('TeamComment', TeamCommentSchema)

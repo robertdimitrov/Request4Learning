@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema 
 
 const UserSchema = new Schema({
@@ -13,5 +14,9 @@ const UserSchema = new Schema({
 	characterAssetName: { type: String, default: 'default.png' },
 	stage: { type: Number, min: 0, max: 7, default: 0 }
 })
+
+UserSchema.methods.comparePassword = function(password){
+	return bcrypt.compareSync(password, this.password)
+}
 
 module.exports = mongoose.model('User', UserSchema)

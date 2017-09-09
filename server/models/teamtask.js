@@ -9,7 +9,7 @@ const TeamTaskSchema = new Schema({
 	text: { type: String, required: true },
 	assigneeID: { type: String },
 	status: { type: String, required: true, enum: ['open', 'closed'] },
-	dateAdded: { type: Date, required: true, default: Date.now() }
+	dateAdded: { type: Date, required: true, default: Date.now }
 })
 
 module.exports = mongoose.model('TeamTask', TeamTaskSchema)
