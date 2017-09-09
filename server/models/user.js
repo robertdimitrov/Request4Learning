@@ -8,6 +8,7 @@ const UserSchema = new Schema({
 	cuid: { type: String, required: true },
 	username: { type: String, required: true },
 	password: { type: String, required: true },
+	publicName: { type: String, validate: [ /.{2,30}/, 'Public Name must be between 2 and 30 characters'] },
 	type: { type: String, required: true, enum: ['teacher', 'student'] },
 	teamID: { type: String },
 	avatarAssetName: { type: String, default: 'default.png' },

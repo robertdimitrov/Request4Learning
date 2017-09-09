@@ -18,11 +18,11 @@ module.exports.signIn = (req, res, next) => {
 		if (!user.comparePassword(req.body.password)){
 			return next({message: "Wrong password", status: httpCodes.unauthorized})
 		}
-		res.json({token: jwt.sign({
+		res.json({ data: { token: jwt.sign({
 			username: user.username,
 			id: user.cuid,
 			teamID: user.teamID
-		}, 'REQUEST4LEARNING')}) 
+		}, 'REQUEST4LEARNING')} }) 
 	})	
 }
 

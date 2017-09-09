@@ -11,6 +11,7 @@ const dummyData = require('./dummyData')
 
 const User = require('./models/user')
 const AuthenticationRoute = require('./routes/authentication.routes')
+const UserRoute = require('./routes/user.routes')
 
 const app = new Express()
 
@@ -30,8 +31,8 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }))
 
 
 app.use((req,res,next) => {
-	if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-		jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'REQUEST4LEARNING', (err, decode) => {
+	if (req.headers && req.headers.authorization) {
+		jsonwebtoken.verify(req.headers.authorization, 'REQUEST4LEARNING', (err, decode) => {
 			req.user = err ? undefined : decode
 		})
 	} else {
@@ -41,6 +42,7 @@ app.use((req,res,next) => {
 })
 
 app.use(AuthenticationRoute)
+app.use(UserRoute)
 
 
 app.use((err, req, res, next) => {
