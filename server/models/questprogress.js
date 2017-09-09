@@ -8,6 +8,7 @@ const QuestProgressSchema = new Schema({
 	questID: { type: String, required: true },
 	teamID: { type: String, required: true },
 	dateStarted: { type: Date },
+	dateFinished: { type: Date },
 	points: { type: Number }
 })
 

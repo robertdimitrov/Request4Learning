@@ -13,7 +13,7 @@ const QuestSchema = new Schema({
 	maxPoints: { type: Number, min: 0, required: true },
 	startDate: { type: Date, required: true },
 	dueDate: { type: Date, required: true },
-	mandatory: { type: Boolean, default: true }
+	isMandatory: { type: Boolean, default: true }
 })
 
 module.exports = mongoose.model('Quest', QuestSchema)
