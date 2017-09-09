@@ -9,7 +9,8 @@ const ForumTopicReplySchema = new Schema({
 	authorID: { type: String, required: true },
 	text: { type: String, required: true },
 	dateAdded: { type: Date, default: Date.now() },
-	isTeacherApproved: { type: Boolean, default: false}
+	isTeacherApproved: { type: Boolean, default: false },
+	isAuthorApproved: { type: Boolean, default: false }
 })
 
 module.exports = mongoose.model('ForumTopicReply', ForumTopicReplySchema)
