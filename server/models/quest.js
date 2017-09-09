@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 const QuestSchema = new Schema({
 	cuid: { type: String, required: true },
 	name: { type: String, required: true },
-	type: { type: String, required: true, enum: ['simple','pickTheWinner','jigsaw','token','emptyOutlines','quiz','riddle','order']}
+	type: { type: String, required: true, enum: ['simple','pickTheWinner','jigsaw','token','emptyOutlines','quiz','riddle','order']},
 	description: { type: String },
 	criteria: { type: String },
 	resources: { type: String },
