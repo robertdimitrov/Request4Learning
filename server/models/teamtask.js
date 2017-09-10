@@ -8,7 +8,7 @@ const TeamTaskSchema = new Schema({
 	teamID: { type: String, required: true },
 	text: { type: String, required: true },
 	assigneeID: { type: String },
-	status: { type: String, required: true, enum: ['open', 'closed'] },
+	status: { type: String, required: true, enum: ['open', 'closed'], default: 'open' },
 	dateAdded: { type: Date, required: true, default: Date.now }
 })
 

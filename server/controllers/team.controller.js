@@ -124,10 +124,6 @@ module.exports.getTeamComments = (req, res, next) => {
 			return next({message: err.message, status: httpCodes.internalServerError})
 		}
 
-		if (!comments) {
-			return next({ message: `No comments found for team with id ${req.params.teamid}`, status: httpCodes.notfound})
-		}
-
 		res.status(httpCodes.success).json({ data: comments })
 	})
 }
@@ -153,19 +149,81 @@ module.exports.createTeamComment = (req, res, next) => {
 }
 
 module.exports.getTeamTasks = (req, res, next) => {
-	
+	TeamTask.find({ teamID: req.params.teamid }).exec( (err, tasks) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+
+		res.status(httpCodes.success).json({ data: tasks })
+	})
 }
 
 module.exports.createTeamTask = (req, res, next) => {
-	
+	if (!req.body.text || req.body.text.length === 0) {
+		return next({message: 'No task text sent', status: httpCodes.badrequest})
+	}
+
+	let task = new TeamTask({
+		text: striptags(req.body.text),
+		cuid: cuid(),
+		authorID: req.user.id,
+		teamID: req.params.teamid
+	})
+
+	task.save( (err) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+		res.status(httpCodes.created).json({ data: task })
+	})
 }
 
 module.exports.updateTeamTask = (req, res, next) => {
-	
+	if ((!req.body.text || req.body.text.length === 0) && !req.body.assignee && !req.body.status) {
+		return next({ message: 'No team task attributes sent', status: httpCodes.badrequest })
+	}
+
+	TeamTask.findOne({ cuid: req.params.taskid }).exec( (err, task) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+
+		if (!task) {
+			return next({message: `Task with id ${req.params.teamid} not found`, status: httpCodes.notfound})
+		}
+
+		task.text = striptags(req.body.text) || task.text
+		task.assignee = req.body.assignee || task.assignee
+		task.status = req.body.status || task.status
+
+		task.save( (err) => {
+			if (err) {
+				return next({message: err.message, status: httpCodes.internalServerError})
+			}
+			res.status(httpCodes.success).json({ data: task })
+		})
+	})
 }
 
 module.exports.deleteTeamTask = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			TeamTask.findOne({ cuid: req.params.taskid }).exec( (err, task) => {
+				if (!task) {
+					return next({ message: `Task with id ${req.params.taskid} not found`, status: httpCodes.notfound })
+				}
+				query()
+			})
+		},
+		function(query) {
+			TeamTask.remove({ cuid: req.params.taskid }).exec( (err) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError})
+				} 
+				res.status(httpCodes.success).end()
+			})
+		}
+	])
 }
 
 module.exports.getTeamInvitations = (req, res, next) => {

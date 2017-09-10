@@ -50,7 +50,6 @@ app.use(TeamRoute)
 
 
 app.use((err, req, res, next) => {
-	console.log(err)
 	res.status(err.status || 500)
 	return res.json({
 		error: {
