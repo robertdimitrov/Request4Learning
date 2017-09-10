@@ -17,7 +17,7 @@ module.exports = multer({
 	fileFilter: function(req, file, callback) {
 		let ext = path.extname(file.originalname)
 		if(ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-			return callback(res.json({message: 'Only PNG or JPEG images are allowed', status: 400}))
+			return callback(null, false)
 		}
 		callback(null, true)
 	}

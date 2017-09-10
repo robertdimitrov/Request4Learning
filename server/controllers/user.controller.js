@@ -3,6 +3,7 @@
 const striptags = require('striptags')
 
 const User = require('../models/user')
+const UserNotification = require('../models/userNotification')
 const httpCodes = require('../utils/httpcodes')
 
 let hideUserFields = (user, loggedUserID) => {
@@ -14,6 +15,13 @@ let hideUserFields = (user, loggedUserID) => {
 		user.stage = undefined
 	}
 	return user
+}
+
+module.exports.sameUserCheck = (req, res, next) => {
+	if (req.user.id !== req.params.cuid) {
+		return next({ message: 'Unauthorized user', status: httpCodes.unauthorized })
+	}
+	next()
 }
 
 module.exports.getUsers = (req, res, next) => {
@@ -50,9 +58,6 @@ module.exports.getUser = (req, res, next) => {
 }
 
 module.exports.updateUser = (req, res, next) => {
-	if (req.user.id !== req.params.cuid) {
-		return next({ message: 'Unauthorized user', status: httpCodes.unauthorized })
-	}
 	if (!req.body.publicName && !req.body.characterAssetName) {
 		return next({ message: 'No user attributes sent', status: httpCodes.badrequest })
 	}
@@ -88,10 +93,6 @@ module.exports.updateUser = (req, res, next) => {
 }
 
 module.exports.updateAvatar = (req, res, next) => {
-	if (req.user.id !== req.params.cuid) {
-		return next({ message: 'Unauthorized user', status: httpCodes.unauthorized })
-	}
-
 	if (!req.file) {
 		return next({ message: 'Problem while uploading the picture', status: httpCodes.internalServerError })
 	} 
@@ -115,7 +116,30 @@ module.exports.updateAvatar = (req, res, next) => {
 	})
 }
 
+module.exports.getUserNotifications = (req, res, next) => {
+	UserNotification.find({}, (err, notifications) => {
+		if (err) {
+			return next({ message: err.message, status: httpCodes.internalServerError })
+		}
 
+		notifications = notifications.filter( n => !n.isSeen && n.userID === req.user.id )
+
+		res.status(httpCodes.success).json({ data: notifications })
+	})
+}
+
+module.exports.updateUserNotification = (req, res, next) => {
+	UserNotification.findOne({ cuid: req.params.nid }).exec( (err, notification) => {
+		notification.isSeen = true
+
+		notification.save( (err, updatedNotification ) => {
+			if (err) {
+				return next({ message: err.message, status: httpCodes.internalServerError })
+			}
+			res.status(httpCodes.success).json({ data: updatedNotification })
+		})
+	})
+}
 
 
 

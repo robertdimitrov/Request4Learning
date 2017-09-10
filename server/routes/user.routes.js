@@ -11,14 +11,22 @@ const upload = multer({ dest: '../public/images/' })
 const imageUpload = require('../utils/imageUpload')
 const avatar = imageUpload.single('avatar')
 
+Router.all(AuthenticationController.loginCheck)
+
 Router.route('/users')
-	.get(AuthenticationController.authCheck, UserController.getUsers)
+	.get(UserController.getUsers)
 
 Router.route('/users/:cuid')
-	.get(AuthenticationController.authCheck, UserController.getUser)
-	.patch(AuthenticationController.authCheck, UserController.updateUser)
+	.get(UserController.getUser)
+	.patch(UserController.sameUserCheck, UserController.updateUser)
 
 Router.route('/users/:cuid/avatar')
-	.patch(avatar, AuthenticationController.authCheck, UserController.updateAvatar)
+	.patch(UserController.sameUserCheck, avatar, UserController.updateAvatar)
+
+Router.route('/users/:cuid/notifications')
+	.get(UserController.sameUserCheck, UserController.getUserNotifications)
+
+Router.route('/users/:cuid/notifications/:nid')
+	.patch(UserController.sameUserCheck, UserController.updateUserNotification)
 
 module.exports = Router

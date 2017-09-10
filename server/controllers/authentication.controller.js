@@ -26,7 +26,7 @@ module.exports.signIn = (req, res, next) => {
 	})	
 }
 
-module.exports.authCheck = (req, res, next) => {
+module.exports.loginCheck = (req, res, next) => {
 	if (!req.user) {
 		return next({message: "Unauthorized user", status: httpCodes.unauthorized})
 	}
