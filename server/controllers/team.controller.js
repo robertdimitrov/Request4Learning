@@ -2,6 +2,7 @@
 
 const striptags = require('striptags')
 const async = require('async')
+const cuid = require('cuid')
 
 const Team = require('../models/team')
 const TeamTask = require('../models/teamTask')
@@ -41,6 +42,10 @@ module.exports.getTeam = (req, res, next) => {
 	Team.findOne({cuid: req.params.teamid}).exec( (err, team) => {
 		if (err) {
 			return next({ message: err.message, status: httpCodes.internalServerError })
+		}
+
+		if (!team) {
+			return next({ message: `Team with id ${req.params.teamid} not found`, status: httpCodes.notfound})
 		}
 
 		return res.status(httpCodes.success).json({ data: team })
@@ -114,11 +119,37 @@ module.exports.updateTeamAvatar = (req, res, next) => {
 }
 
 module.exports.getTeamComments = (req, res, next) => {
-	
+	TeamComment.find({ teamID: req.params.teamid }).exec( (err, comments) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+
+		if (!comments) {
+			return next({ message: `No comments found for team with id ${req.params.teamid}`, status: httpCodes.notfound})
+		}
+
+		res.status(httpCodes.success).json({ data: comments })
+	})
 }
 
 module.exports.createTeamComment = (req, res, next) => {
-	
+	if (!req.body.text || req.body.text.length === 0) {
+		return next({message: 'No comment text sent', status: httpCodes.badrequest})
+	}
+
+	let comment = new TeamComment({
+		text: striptags(req.body.text),
+		cuid: cuid(),
+		authorID: req.user.id,
+		teamID: req.params.teamid
+	})
+
+	comment.save( (err) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+		res.status(httpCodes.created).json({ data: comment })
+	})
 }
 
 module.exports.getTeamTasks = (req, res, next) => {

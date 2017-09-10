@@ -13,6 +13,7 @@ const User = require('./models/user')
 const AuthenticationRoute = require('./routes/authentication.routes')
 const UserRoute = require('./routes/user.routes')
 const TeamRoute = require('./routes/team.routes')
+const AuthenticationController = require('./controllers/authentication.controller')
 
 const app = new Express()
 
@@ -43,11 +44,13 @@ app.use((req,res,next) => {
 })
 
 app.use(AuthenticationRoute)
+app.use(AuthenticationController.loginCheck)
 app.use(UserRoute)
 app.use(TeamRoute)
 
 
 app.use((err, req, res, next) => {
+	console.log(err)
 	res.status(err.status || 500)
 	return res.json({
 		error: {

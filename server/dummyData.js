@@ -13,6 +13,7 @@ module.exports = () => {
 	addTeams()
 	addTeamTasks()
 	addTeamInvitations()
+	addTeamComments()
 }
 
 function addUsers() {

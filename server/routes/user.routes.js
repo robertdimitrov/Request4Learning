@@ -9,8 +9,6 @@ const Router = express.Router()
 const imageUpload = require('../utils/imageUpload')
 const avatar = imageUpload.single('avatar')
 
-Router.all(AuthenticationController.loginCheck)
-
 Router.route('/users')
 	.get(UserController.getUsers)
 
