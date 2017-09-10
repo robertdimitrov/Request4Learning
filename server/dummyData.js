@@ -6,6 +6,9 @@ const Team = require('./models/team')
 const TeamComment = require('./models/teamComment')
 const TeamTask = require('./models/teamTask')
 const TeamInvitation = require('./models/teamInvitation')
+const Course = require('./models/course')
+const CourseAnnouncement = require('./models/courseAnnouncement')
+const CourseFeedback = require('./models/courseFeedback')
 
 module.exports = () => {
 	addUsers()
@@ -14,6 +17,9 @@ module.exports = () => {
 	addTeamTasks()
 	addTeamInvitations()
 	addTeamComments()
+	addCourseInformation()
+	addCourseAnnouncements()
+	addCourseFeedbacks()
 }
 
 function addUsers() {
@@ -239,3 +245,85 @@ function addTeamInvitations() {
 		})
 	})
 }
+
+function addCourseInformation() {
+	Course.count().exec( (err, count) => {
+		if (count > 0 ) {
+			return 
+		}
+
+		let date = new Date()
+		date.setMonth(date.getMonth() + 5)
+
+		let course = new Course({
+			cuid: 'cj7f9litc0000040rzzxkj15o',
+			courseInfo: 'Info about this course',
+			assessmentInfo: 'Info about assessment',
+			examInfo: 'Info about exam',
+			endDate: date
+		})
+
+		Course.collection.insert(course, (error) => {
+			if (error) {
+				console.log('Couldnt create dummy Course data')
+			}
+		})
+	})
+}
+
+function addCourseAnnouncements() {
+	CourseAnnouncement.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let announcement1 = new CourseAnnouncement({
+			cuid: 'cj7f9m6yb0001040r53klo0cz',
+			text: 'Announcement 1'
+		})
+
+		let announcement2 = new CourseAnnouncement({
+			cuid: 'cj7f9ms1l0002040r96vbmo85',
+			text: 'Announcement 2'
+		})
+
+		CourseAnnouncement.collection.insert([announcement1, announcement2], (error) => {
+			if (error) {
+				console.log('Couldnt create dummy Course Announcement data')
+			}
+		})
+	})
+}
+
+function addCourseFeedbacks() {
+	CourseFeedback.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let feedback1 = new CourseFeedback({
+			cuid: 'cj7f9p2t90003040rv6u5yxf9',
+			authorID: 'cj7d7kob70001041a33i0ucr6',
+			text: 'Feedback 1 text',
+			rating: 5
+		})
+
+		let feedback2 = new CourseFeedback({
+			cuid: 'cj7f9pviw0004040rydae1d4u',
+			authorID: 'cj7esmyoy000a0405duv2v5hz',
+			text: 'Feedback 2 text',
+			rating: 3
+		})
+
+		CourseFeedback.collection.insert([feedback1, feedback2], (error) => {
+			if (error) {
+				console.log('Couldnt create dummy Course Feedback data')
+			}
+		})
+	})
+}
+
+
+
+
+
