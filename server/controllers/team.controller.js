@@ -227,13 +227,127 @@ module.exports.deleteTeamTask = (req, res, next) => {
 }
 
 module.exports.getTeamInvitations = (req, res, next) => {
-	
+	TeamInvitation.find({ receiverID: req.user.id }, (err, invitations) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+		res.status(httpCodes.success).json({ data: invitations })
+	})
 }
 
 module.exports.createTeamInvitation = (req, res, next) => {
-	
+	if (!req.body.receiverID) {
+		return next({ message: 'Receiver of invitation not specified', status: httpCodes.badrequest })
+	}
+
+	if (req.body.receiverID === req.user.id) {
+		return next({ message: 'A user can not invite herself to a team', status: httpCodes.badrequest})
+	}
+
+	async.series([
+		function(query) {
+			User.findOne({ cuid: req.body.receiverID }).exec( (err, user) => {
+				if (!user) {
+					return next({ message: `User with id ${req.body.receiverID} not found`, status: httpCodes.notfound })
+				}
+				query()
+			})
+		},
+		function(query) {
+			let invitation = new TeamInvitation({
+				senderID: req.user.id,
+				receiverID: req.body.receiverID,
+				cuid: cuid()
+			})
+
+			invitation.save( (err) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError})
+				}
+				res.status(httpCodes.success).json({ data: invitation })
+			})
+		}
+	])
 }
 
 module.exports.updateTeamInvitation = (req, res, next) => {
-	
+	if (!req.body.status || (req.body.status !== 'accepted' && req.body.status !== 'declined')) {
+		return next({ message: 'New status must be accepted or declined', status: httpCodes.badrequest })
+	}
+
+	async.waterfall([
+		function(query) {
+			TeamInvitation.findOne({ cuid: req.params.invitationid }).exec( (err, invitation) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError})
+				}
+				if (!invitation) {
+					return next({ message: `Invitation with id ${req.params.invitationid} not found`, status: httpCodes.notfound })
+				}
+
+				if (req.body.status === 'declined') {
+					invitation.status = 'declined'
+					invitation.save( (err) => {
+						if (err) {
+							return next({message: err.message, status: httpCodes.internalServerError})
+						}
+						res.status(httpCodes.success).json({ data: invitation })
+					})
+				} else {
+					query(null, invitation)
+				}
+			})
+		},
+		function(invitation, query) {
+			invitation.status = 'accepted'
+			invitation.save( (err) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError}) 
+				}
+				query(null, invitation)
+			})
+		},
+		function(invitation, query) {
+			let receiverID = req.user.id
+			let senderID = invitation.senderID
+
+			TeamInvitation.findOne({ senderID: senderID, receiverID: { $ne: receiverID}, status: 'accepted'}).exec( (err, invitation) => {
+				if (invitation) {
+					let thirdTeamMemberID = invitation.receiverID
+					query(null, [receiverID, senderID, thirdTeamMemberID])
+				} else {
+					res.status(httpCodes.success).end()
+				}
+			})
+		},
+		function(users, query) {
+			let team = new Team({
+				cuid: cuid(),
+				name: cuid()
+			})
+			team.save( (err) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError}) 
+				}
+				query(null, users, team.cuid)
+			})
+		},
+		function(users, teamCUID, query) {
+			User.update({ cuid: { $in: users }}, { teamID: teamCUID}, {multi: true}, (err, updatedUsers) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError}) 
+				}
+				query(null, users)
+			})
+		},
+		function(users, query) {
+			TeamInvitation.update({ $or: [{senderID: { $in: users }}, {receiverID: { $in: users }}], status: { $ne: 'accepted'}},
+				{status: 'closed'}, {multi: true}, (err, updatedInvitations) => {
+					if (err) {
+						return next({message: err.message, status: httpCodes.internalServerError})  
+					}
+					res.status(httpCodes.success).end()
+				})
+		}
+	])
 }

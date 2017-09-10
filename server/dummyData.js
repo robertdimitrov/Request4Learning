@@ -47,7 +47,28 @@ function addUsers() {
 			teamID: 'cj7erkxk6000104057wc8ba0o'
 		})
 
-		User.collection.insert([user1, user2], (error) => {
+		let user4 = new User({
+			cuid: 'cj7f1qr20000104vc72o01zqd',
+			username: 'userA',
+			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
+			type: 'student'
+		})
+
+		let user5 = new User({
+			cuid: 'cj7f1rqgc000204vcojg8pzb7',
+			username: 'userB',
+			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
+			type: 'student'
+		})
+
+		let user6 = new User({
+			cuid: 'cj7f1rvc7000304vcxsfj8j01',
+			username: 'userC',
+			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
+			type: 'student'
+		})
+
+		User.collection.insert([user1, user2, user3, user4, user5, user6], (error) => {
 			if (error) {
 				console.log('Couldnt create dummy User data')
 			}
@@ -192,7 +213,26 @@ function addTeamInvitations() {
 			status: 'open'
 		})
 
-		TeamInvitation.collection.insert([invitation1], (error) => {
+		let invitation2 = new TeamInvitation({
+			cuid: 'cj7f1sts2000404vc1tvi71yg',
+			senderID: 'cj7f1rvc7000304vcxsfj8j01',
+			receiverID: 'cj7f1rqgc000204vcojg8pzb7',
+			status: 'accepted'
+		})
+
+		let invitation3 = new TeamInvitation({
+			cuid: 'cj7f1uqb5000504vcalgg2t0h',
+			senderID: 'cj7f1rvc7000304vcxsfj8j01',
+			receiverID: 'cj7f1qr20000104vc72o01zqd'
+		})
+
+		let invitation4 = new TeamInvitation({
+			cuid: 'cj7f1uu99000604vcvsmhl0tu',
+			senderID: 'cj7esmyoy000a0405duv2v5hz',
+			receiverID: 'cj7f1qr20000104vc72o01zqd'
+		})
+
+		TeamInvitation.collection.insert([invitation1, invitation2, invitation3, invitation4], (error) => {
 			if (error) {
 				console.log('Couldnt create dummy Team Comment data')
 			}
