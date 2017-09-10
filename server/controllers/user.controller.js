@@ -140,14 +140,3 @@ module.exports.updateUserNotification = (req, res, next) => {
 		})
 	})
 }
-
-
-
-
-
-
-
-
-
-
-

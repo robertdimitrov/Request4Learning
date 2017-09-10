@@ -6,8 +6,6 @@ const AuthenticationController = require('../controllers/authentication.controll
 
 const Router = express.Router()
 
-const multer = require('multer')
-const upload = multer({ dest: '../public/images/' })
 const imageUpload = require('../utils/imageUpload')
 const avatar = imageUpload.single('avatar')
 

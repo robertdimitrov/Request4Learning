@@ -12,6 +12,7 @@ const dummyData = require('./dummyData')
 const User = require('./models/user')
 const AuthenticationRoute = require('./routes/authentication.routes')
 const UserRoute = require('./routes/user.routes')
+const TeamRoute = require('./routes/team.routes')
 
 const app = new Express()
 
@@ -43,11 +44,12 @@ app.use((req,res,next) => {
 
 app.use(AuthenticationRoute)
 app.use(UserRoute)
+app.use(TeamRoute)
 
 
 app.use((err, req, res, next) => {
 	res.status(err.status || 500)
-	res.json({
+	return res.json({
 		error: {
 			message: err.message
 		}
