@@ -5,6 +5,17 @@ const striptags = require('striptags')
 const User = require('../models/user')
 const httpCodes = require('../utils/httpcodes')
 
+let hideUserFields = (user, loggedUserID) => {
+	user.publicName = user.publicName || user.username
+	user.password = undefined 
+	if (user.cuid !== loggedUserID) {
+		user.username = undefined
+		user.characterAssetName = undefined
+		user.stage = undefined
+	}
+	return user
+}
+
 module.exports.getUsers = (req, res, next) => {
 	User.find({}, (err, users) => {
 		if (err) {
@@ -34,25 +45,7 @@ module.exports.getUser = (req, res, next) => {
 			return next({ message: `User with id ${req.params.cuid} not found`, status: httpCodes.notfound })
 		}
 
-		let userInfo = {
-			cuid: user.cuid,
-			username: user.username,
-			publicName: user.publicName || user.username,
-			type: user.type,
-			teamID: user.teamID,
-			avatarAssetName: user.avatarAssetName,
-			characterAssetName: user.characterAssetName,
-			stage: user.stage
-		}
-
-		if (req.user.id === req.params.cuid) {
-			res.status(httpCodes.success).json({ data: userInfo })
-		} else {
-			userInfo.username = undefined
-			userInfo.characterAssetName = undefined
-			userInfo.stage = undefined
-			res.status(httpCodes.success).json({ data: userInfo })
-		}
+		res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
 	})
 }
 
@@ -87,9 +80,50 @@ module.exports.updateUser = (req, res, next) => {
 			if (err) {
 				return next({ message: err.message, status: httpCodes.internalServerError })
 			}
-			res.status(httpCodes.success).json(updatedUser)
+
+			res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
 		})
 
 	})
-
 }
+
+module.exports.updateAvatar = (req, res, next) => {
+	if (req.user.id !== req.params.cuid) {
+		return next({ message: 'Unauthorized user', status: httpCodes.unauthorized })
+	}
+
+	if (!req.file) {
+		return next({ message: 'Problem while uploading the picture', status: httpCodes.internalServerError })
+	} 
+
+	User.findOne({ cuid: req.params.cuid }).exec( (err, user) => {
+		if (err) {
+			return next({message: err.message, status: httpCodes.internalServerError})
+		}
+		if (!user) {
+			return next({ message: `User with id ${req.params.cuid} not found`, status: httpCodes.notfound })
+		}
+
+		user.avatarAssetName = req.file.filename
+
+		user.save( (err, updatedUser) => {
+			if (err) {
+				return next({ message: err.message, status: httpCodes.internalServerError })
+			}
+			res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
+		})
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

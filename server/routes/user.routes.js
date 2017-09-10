@@ -6,11 +6,19 @@ const AuthenticationController = require('../controllers/authentication.controll
 
 const Router = express.Router()
 
+const multer = require('multer')
+const upload = multer({ dest: '../public/images/' })
+const imageUpload = require('../utils/imageUpload')
+const avatar = imageUpload.single('avatar')
+
 Router.route('/users')
 	.get(AuthenticationController.authCheck, UserController.getUsers)
 
 Router.route('/users/:cuid')
 	.get(AuthenticationController.authCheck, UserController.getUser)
 	.patch(AuthenticationController.authCheck, UserController.updateUser)
+
+Router.route('/users/:cuid/avatar')
+	.patch(avatar, AuthenticationController.authCheck, UserController.updateAvatar)
 
 module.exports = Router
