@@ -15,6 +15,7 @@ const UserRoute = require('./routes/user.routes')
 const TeamRoute = require('./routes/team.routes')
 const AuthenticationController = require('./controllers/authentication.controller')
 const CourseRoute = require('./routes/course.routes')
+const ForumRoute = require('./routes/forum.routes')
 
 const app = new Express()
 
@@ -49,6 +50,7 @@ app.use(AuthenticationController.loginCheck)
 app.use(UserRoute)
 app.use(TeamRoute)
 app.use(CourseRoute)
+app.use(ForumRoute)
 
 
 app.use((err, req, res, next) => {

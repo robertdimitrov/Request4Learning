@@ -9,6 +9,11 @@ const TeamInvitation = require('./models/teamInvitation')
 const Course = require('./models/course')
 const CourseAnnouncement = require('./models/courseAnnouncement')
 const CourseFeedback = require('./models/courseFeedback')
+const ForumTopic = require('./models/forumTopic')
+const ForumTopicReply = require('./models/forumTopicReply')
+const ForumTopicReplyLike = require('./models/forumTopicReplyLike')
+const ForumPollOption = require('./models/forumPollOption')
+const ForumPollAnswer = require('./models/forumPollAnswer')
 
 module.exports = () => {
 	addUsers()
@@ -20,6 +25,11 @@ module.exports = () => {
 	addCourseInformation()
 	addCourseAnnouncements()
 	addCourseFeedbacks()
+	addForumTopics()
+	addForumTopicReplies()
+	addForumTopicReplyLikes()
+	addForumPollOptions()
+	addForumPollAnswers()
 }
 
 function addUsers() {
@@ -324,6 +334,192 @@ function addCourseFeedbacks() {
 }
 
 
+function addForumTopics() {
+	ForumTopic.count().exec ( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let topic1 = new ForumTopic({
+			cuid: 'cj7gidv78000004z8w69d84ve',
+			type: 'discussion',
+			title: 'Title Forum Topic 1',
+			authorID: 'cj7d7kob70001041a33i0ucr6'
+		})
+
+		let topic2 = new ForumTopic({
+			cuid: 'cj7gihkpv000104z8w9voemlx',
+			type: 'question',
+			title: 'Title Forum Topic 2',
+			authorID: 'cj7d7mgcj0002041aztfgmx0k'
+		})
+
+		let topic3 = new ForumTopic({
+			cuid: 'cj7gihnoo000204z8uiht8rml',
+			type: 'tutorial',
+			title: 'Title Forum Topic 3',
+			authorID: 'cj7d7kob70001041a33i0ucr6'
+		})
+
+		let topic4 = new ForumTopic({
+			cuid: 'cj7gihqqz000304z8w1rz912k',
+			type: 'poll',
+			title: 'Title Forum Topic 4',
+			authorID: 'cj7f1rqgc000204vcojg8pzb7'
+		})
+
+		ForumTopic.collection.insert([topic1, topic2, topic3, topic4], (error) => {
+			if (error) {
+				console.log('Couldnt create dummy Forum Topic data')
+			}
+		})
+	})
+}
+
+function addForumTopicReplies() {
+	ForumTopicReply.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let reply1 = new ForumTopicReply({
+			cuid: 'cj7giq326000404z8lzvtr1cn',
+			topicID: 'cj7gidv78000004z8w69d84ve',
+			authorID: 'cj7d7kob70001041a33i0ucr6',
+			text: 'Init Reply for Topic 1'
+		})
+
+		let reply2 = new ForumTopicReply({
+			cuid: 'cj7giq83z000504z849tvrstw',
+			topicID: 'cj7gihkpv000104z8w9voemlx',
+			authorID: 'cj7d7mgcj0002041aztfgmx0k',
+			text: 'Init Reply for Topic 2'
+		})
+
+		let reply3 = new ForumTopicReply({
+			cuid: 'cj7giqbpq000604z8bqs38kwq',
+			topicID: 'cj7gihnoo000204z8uiht8rml',
+			authorID: 'cj7d7kob70001041a33i0ucr6',
+			text: 'Init Reply for Topic 3'
+		})
+
+		let reply4 = new ForumTopicReply({
+			cuid: 'cj7giqhf4000704z8rse66m70',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			authorID: 'cj7f1rqgc000204vcojg8pzb7',
+			text: 'Init Reply for Topic 4'
+		})
+
+		let reply5 = new ForumTopicReply({
+			cuid: 'cj7giqllx000804z8o2y81mvt',
+			topicID: 'cj7gidv78000004z8w69d84ve',
+			authorID: 'cj7d7mgcj0002041aztfgmx0k',
+			text: 'Some other reply for Topic 1',
+			isTeacherApproved: true,
+			isAuthorApproved: true
+		})
+
+		ForumTopicReply.collection.insert([reply1, reply2, reply3, reply4, reply5], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Forum Topic Reply data')
+			}
+		})
+	})
+}
+
+function addForumTopicReplyLikes() {
+	ForumTopicReplyLike.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let like1 = new ForumTopicReplyLike({
+			cuid: 'cj7givppq000904z8yjcr0dpd',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			replyID: 'cj7giqhf4000704z8rse66m70',
+			authorID: 'cj7d7mgcj0002041aztfgmx0k'
+		})
+
+		let like2 = new ForumTopicReplyLike({
+			cuid: 'cj7giwhlg000a04z8kepzmcbs',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			replyID: 'cj7giqhf4000704z8rse66m70',
+			authorID: 'cj7f1rqgc000204vcojg8pzb7'
+		})
+
+		let like3 = new ForumTopicReplyLike({
+			cuid: 'cj7gix2uq000b04z88kzvzpos',
+			topicID: 'cj7gihkpv000104z8w9voemlx',
+			replyID: 'cj7giq83z000504z849tvrstw',
+			authorID: 'cj7f1rqgc000204vcojg8pzb7'
+		})
+
+		ForumTopicReplyLike.collection.insert([like1, like2, like3], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Forum Topic Reply Like data')
+			}
+		})
+	})
+}
 
 
+function addForumPollOptions() {
+	ForumPollOption.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
 
+		let option1 = new ForumPollOption({
+			cuid: 'cj7gj1zqs000c04z86v05izvn',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			text: 'Yes'
+		})
+
+		let option2 = new ForumPollOption({
+			cuid: 'cj7gj2318000d04z8id9ir0oi',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			text: 'No'
+		})
+
+		ForumPollOption.collection.insert([option1, option2], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Forum Poll Option data')
+			}
+		})
+	})
+}
+
+function addForumPollAnswers() {
+	ForumPollAnswer.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let answer1 = new ForumPollAnswer({
+			cuid: 'cj7gj4vuc000e04z8squpw766',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			authorID: 'cj7d7kob70001041a33i0ucr6',
+			optionID: 'cj7gj1zqs000c04z86v05izvn'
+		})
+
+		let answer2 = new ForumPollAnswer({
+			cuid: 'cj7gj5d0l000f04z8msiw7x5f',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			authorID: 'cj7d7mgcj0002041aztfgmx0k',
+			optionID: 'cj7gj1zqs000c04z86v05izvn'
+		})
+
+		let answer3 = new ForumPollAnswer({
+			cuid: 'cj7gj5u80000g04z8t9i9gamo',
+			topicID: 'cj7gihqqz000304z8w1rz912k',
+			authorID: 'cj7f1rvc7000304vcxsfj8j01',
+			optionID: 'cj7gj2318000d04z8id9ir0oi'
+		})
+
+		ForumPollAnswer.collection.insert([answer1, answer2, answer3], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Forum Poll Answer data')
+			}
+		})
+	})
+}
