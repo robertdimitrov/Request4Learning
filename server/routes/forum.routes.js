@@ -22,19 +22,19 @@ Router.route('/forum-topics/:topicid/replies/:replyid')
 	.patch(ForumController.checkForumTopicExists, ForumController.updateForumTopicReply)
 
 Router.route('/forum-topics/:topicid/replies/:replyid/likes')
-	.get(ForumController.getForumTopicReplyLikes)
-	.put(ForumController.createForumTopicReplyLike)
+	.get(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.getForumTopicReplyLikes)
+	.put(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.createForumTopicReplyLike)
 
 Router.route('/forum-topics/:topicid/replies/:replyid/likes/:likeid')
-	.delete(ForumController.deleteForumTopicReplyLike)
+	.delete(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.deleteForumTopicReplyLike)
 
 Router.route('/forum-topics/:topicid/poll-options')
-	.get(ForumController.getForumPollOptions)
-	.put(ForumController.createForumPollOption)
+	.get(ForumController.checkForumTopicExists, ForumController.getForumPollOptions)
+	.put(ForumController.checkForumTopicExists, ForumController.createForumPollOptions)
 
 Router.route('/forum-topics/:topicid/poll-answers')
-	.get(ForumController.getForumPollAnswers)
-	.put(ForumController.createForumPollanswer)
+	.get(ForumController.checkForumTopicExists, ForumController.getForumPollAnswers)
+	.put(ForumController.checkForumTopicExists, ForumController.createForumPollanswer)
 
 Router.route('/forum-stats/most-replies')
 	.get(ForumController.getUsersWithMostReplies)
