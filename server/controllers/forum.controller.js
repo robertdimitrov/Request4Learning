@@ -9,6 +9,7 @@ const ForumTopicReply = require('../models/forumTopicReply')
 const ForumTopicReplyLike = require('../models/forumTopicReplyLike')
 const ForumPollOption = require('../models/forumPollOption')
 const ForumPollAnswer = require('../models/forumPollAnswer')
+const User = require('../models/user')
 const httpCodes = require('../utils/httpcodes')
 
 module.exports.getForumTopics = (req, res, next) => {
@@ -123,8 +124,6 @@ module.exports.getForumTopicReplies = (req, res, next) => {
 			})
 		}
 	])
-
-
 }
 
 module.exports.createForumTopicReply = (req, res, next) => {
@@ -395,7 +394,59 @@ module.exports.createForumPollanswer = (req, res, next) => {
 }
 
 module.exports.getUsersWithMostReplies = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			ForumTopicReply.find({}).exec( (err, replies) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+
+				let userIDs = replies.map( r => r.authorID )
+
+				let map = {}
+
+				for (let i = 0; i < userIDs.length; i++) {
+					if (map[userIDs[i]]) {
+						map[userIDs[i]] += 1
+					} else {
+						map[userIDs[i]] = 1
+					}
+				}
+
+				let users = []
+
+				for (let key in map) {
+					users.push({ id: key, repliesCount: map[key]})
+				}
+
+				users = users.sort( (a,b) => a.repliesCount < b.repliesCount)
+
+				if (req.query.limit) {
+					let limit = parseInt(req.query.limit)
+					if (!isNaN(limit) && limit > 0) {
+						users = users.slice(0,Number(req.query.limit))	
+					}
+				}
+
+				query(null, users, userIDs)
+			})
+		},
+		function(users, userIDs, query) {
+			User.find({ cuid: { $in: userIDs }}).exec( (err, dbUsers) => {
+				for (let user of users) {
+					let dbUser = {}
+					for (let u of dbUsers) {
+						if (u.cuid === user.id) {
+							dbUser = u
+						}
+					}
+					user.publicName = dbUser.publicName || dbUser.username
+					user.avatarAssetName = dbUser.avatarAssetName
+				}
+				res.status(200).json({ data: users })
+			})
+		}
+	])
 }
 
 module.exports.getUsersWithMostTutorials = (req, res, next) => {
