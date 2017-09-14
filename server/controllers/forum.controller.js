@@ -393,6 +393,36 @@ module.exports.createForumPollanswer = (req, res, next) => {
 	])
 }
 
+let findArrayElementOccurencies = (arr) => {
+	let map = {}
+
+	for (let i = 0; i < arr.length; i++) {
+		if (map[arr[i]]) {
+			map[arr[i]] += 1
+		} else {
+			map[arr[i]] = 1
+		}
+	}
+
+	return map
+}
+
+let fillUserFields = (users, userIDs, query) => {
+	User.find({ cuid: { $in: userIDs }}).exec( (err, dbUsers) => {
+		for (let user of users) {
+			let dbUser = {}
+			for (let u of dbUsers) {
+				if (u.cuid === user.id) {
+					dbUser = u
+				}
+			}
+			user.publicName = dbUser.publicName || dbUser.username
+			user.avatarAssetName = dbUser.avatarAssetName
+		}
+		query(null, users)
+	})
+}
+
 module.exports.getUsersWithMostReplies = (req, res, next) => {
 	async.waterfall([
 		function(query) {
@@ -401,17 +431,9 @@ module.exports.getUsersWithMostReplies = (req, res, next) => {
 					return next({ message: err.message, status: httpCodes.internalServerError })
 				}
 
-				let userIDs = replies.map( r => r.authorID )
+				let idValues = replies.map( r => r.authorID)
 
-				let map = {}
-
-				for (let i = 0; i < userIDs.length; i++) {
-					if (map[userIDs[i]]) {
-						map[userIDs[i]] += 1
-					} else {
-						map[userIDs[i]] = 1
-					}
-				}
+				let map = findArrayElementOccurencies(idValues)
 
 				let users = []
 
@@ -428,31 +450,88 @@ module.exports.getUsersWithMostReplies = (req, res, next) => {
 					}
 				}
 
-				query(null, users, userIDs)
+				query(null, users, idValues)
 			})
 		},
-		function(users, userIDs, query) {
-			User.find({ cuid: { $in: userIDs }}).exec( (err, dbUsers) => {
-				for (let user of users) {
-					let dbUser = {}
-					for (let u of dbUsers) {
-						if (u.cuid === user.id) {
-							dbUser = u
-						}
-					}
-					user.publicName = dbUser.publicName || dbUser.username
-					user.avatarAssetName = dbUser.avatarAssetName
-				}
-				res.status(200).json({ data: users })
-			})
+		fillUserFields,
+		function(users, query) {
+			res.status(httpCodes.success).json({ data: users })
 		}
 	])
 }
 
+
+
 module.exports.getUsersWithMostTutorials = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			ForumTopic.find({ type: 'tutorial'}).exec( (err, tutorials) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+
+				let idValues = tutorials.map( t => t.authorID)
+
+				let map = findArrayElementOccurencies(idValues)
+
+				let users = []
+
+				for (let key in map) {
+					users.push({ id: key, tutorialsCount: map[key]})
+				}
+
+				users = users.sort( (a,b) => a.tutorialsCount < b.tutorialsCount)
+
+				if (req.query.limit) {
+					let limit = parseInt(req.query.limit)
+					if (!isNaN(limit) && limit > 0) {
+						users = users.slice(0,Number(req.query.limit))	
+					}
+				}
+
+				query(null, users, idValues)
+			})
+		},
+		fillUserFields,
+		function(users, query) {
+			res.status(httpCodes.success).json({ data: users })
+		}
+	])
 }
 
 module.exports.getUsersWithMostMarkedAnswers = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			ForumTopicReply.find({ isAuthorApproved: true }).exec( (err, approvedReplies) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+
+				let idValues = approvedReplies.map( a => a.authorID)
+
+				let map = findArrayElementOccurencies(idValues)
+
+				let users = []
+
+				for (let key in map) {
+					users.push({ id: key, approvedRepliesCount: map[key]})
+				}
+
+				users = users.sort( (a,b) => a.approvedRepliesCount < b.approvedRepliesCount)
+
+				if (req.query.limit) {
+					let limit = parseInt(req.query.limit)
+					if (!isNaN(limit) && limit > 0) {
+						users = users.slice(0,Number(req.query.limit))	
+					}
+				}
+
+				query(null, users, idValues)
+			})
+		},
+		fillUserFields,
+		function(users, query) {
+			res.status(httpCodes.success).json({ data: users })
+		}
+	])
 }
