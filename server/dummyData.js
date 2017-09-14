@@ -16,6 +16,13 @@ const ForumPollOption = require('./models/forumPollOption')
 const ForumPollAnswer = require('./models/forumPollAnswer')
 const Quest = require('./models/quest')
 const QuestProgress = require('./models/questProgress')
+const PublicQuest = require('./models/publicQuest')
+const JigsawQuestResource = require('./models/jigsawQuestResource')
+const EmptyOutlinesQuest = require('./models/emptyOutlinesQuest')
+const QuizQuestQuestion = require('./models/quizQuestQuestion')
+const QuizQuestRightAnswer = require('./models/quizQuestRightAnswer')
+const RiddleQuest = require('./models/riddleQuest')
+const OrderQuestPiece = require('./models/orderQuestPiece')
 
 module.exports = () => {
 	addUsers()
@@ -34,6 +41,7 @@ module.exports = () => {
 	addForumPollAnswers()
 	addQuests()
 	addQuestProgress()
+	addQuestTypes()
 }
 
 function addUsers() {
@@ -71,21 +79,24 @@ function addUsers() {
 			cuid: 'cj7f1qr20000104vc72o01zqd',
 			username: 'userA',
 			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
-			type: 'student'
+			type: 'student',
+			teamID: 'cj7erlg3100030405hxwx56c3'
 		})
 
 		let user5 = new User({
 			cuid: 'cj7f1rqgc000204vcojg8pzb7',
 			username: 'userB',
 			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
-			type: 'student'
+			type: 'student',
+			teamID: 'cj7kxpkof000f04xf54f4f0k2'
 		})
 
 		let user6 = new User({
 			cuid: 'cj7f1rvc7000304vcxsfj8j01',
 			username: 'userC',
 			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
-			type: 'student'
+			type: 'student',
+			teamID: 'cj7kxpkof000f04xf54f4f0k2'
 		})
 
 		User.collection.insert([user1, user2, user3, user4, user5, user6], (error) => {
@@ -147,6 +158,12 @@ function addTeams() {
 			cuid: 'cj7erlg3100030405hxwx56c3',
 			name: 'Gruppe A',
 			motto: 'Motto'
+		})
+
+		let team3 = new Team({
+			cuid: 'cj7kxpkof000f04xf54f4f0k2',
+			name: 'Team 3',
+			motto: 'Motto Team 3'
 		})
 
 		Team.collection.insert([team1, team2], (error) => {
@@ -672,10 +689,235 @@ function addQuestProgress() {
 			dateStarted: date.setDate(date.getDate() + 1)
 		})
 
-		QuestProgress.collection.insert([questProgress1, questProgress2], (err) => {
+		let questProgress3 = new QuestProgress({
+			cuid: 'cj7l04sd0001c04xfqp1s0v5u',
+			questID: 'cj7kw6vlu000504xfhmfkdfzs',
+			teamID: 'cj7erkxk6000104057wc8ba0o',
+			dateStarted: date.setDate(date.getDate() + 1),
+			dateFinished: date.setDate(date.getDate() + 2)
+		})
+
+		QuestProgress.collection.insert([questProgress1, questProgress2, questProgress3], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Quest data')
 			}
 		})
 	}) 
+}
+
+function addQuestTypes() {
+	PublicQuest.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let date = new Date()
+
+		let publicQuest1 = new PublicQuest({
+			cuid: 'cj7kxynbd000g04xfikqs7p2s',
+			questID: 'cj7kvmnws000304xfymng6rnz',
+			assessmentUntil: date.setDate(date.getDate() + 21)	
+		})
+
+		let publicQuest2 = new PublicQuest({
+			cuid: 'cj7kxz5vp000h04xf8dbhx6d2',
+			questID: 'cj7kw5m87000404xfe2abb0nj',
+			assessmentUntil: date.setDate(date.getDate() + 7)	
+		})
+
+		let publicQuest3 = new PublicQuest({
+			cuid: 'cj7kxzjew000i04xfryljpl5p',
+			questID: 'cj7kw6vlu000504xfhmfkdfzs',
+			assessmentUntil: date.setDate(date.getDate() + 7)	
+		})
+
+		let publicQuest4 = new PublicQuest({
+			cuid: 'cj7ky13hv000j04xf4zy7zl4a',
+			questID: 'cj7kw7j0p000604xfo36k2p82',
+			assessmentUntil: date.setDate(date.getDate() + 7)	
+		})
+
+		PublicQuest.collection.insert([publicQuest1, publicQuest2, publicQuest3, publicQuest4], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Public Quest data')
+			}
+		})
+	})
+
+	JigsawQuestResource.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let resource = new JigsawQuestResource({
+			cuid: 'cj7kzdrn7001b04xfamzh0vve',
+			publicQuestID: 'cj7kxzjew000i04xfryljpl5p',
+			text: 'Some text that needs to be summarized',
+			teamID: 'cj7erkxk6000104057wc8ba0o'
+		})
+
+		JigsawQuestResource.collection.insert([resource], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Public Quest data')
+			}
+		})
+	})
+
+	EmptyOutlinesQuest.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let emptyOutlinesQuest = new EmptyOutlinesQuest({
+			cuid: 'cj7ky43bv000k04xfy2k89t1t',
+			questID: 'cj7kw88gv000704xf6igxgchs',
+			text: 'Some text with (1) some empty spaces. The students (2) have to (3) find the right (4) words behind the (5) fields'
+		})
+
+		emptyOutlinesQuest.collection.insert([emptyOutlinesQuest], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Empty Outlines Quest data')
+			}
+		})
+	})
+
+	QuizQuestQuestion.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let question1 = new QuizQuestQuestion({
+			cuid: 'cj7ky9j3o000l04xfzyrcenjl',
+			questID: 'cj7kw8zix000804xflu11ldej',
+			question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?'
+		})
+
+		let question2 = new QuizQuestQuestion({
+			cuid: 'cj7kyaajk000m04xfguhwc0fe',
+			questID: 'cj7kw8zix000804xflu11ldej',
+			question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?'
+		})
+
+		let question3 = new QuizQuestQuestion({
+			cuid: 'cj7kyaddj000n04xfd2hxhaak',
+			questID: 'cj7kw8zix000804xflu11ldej',
+			question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?'
+		})
+
+		let question4 = new QuizQuestQuestion({
+			cuid: 'cj7kyagea000o04xf906mx2n8',
+			questID: 'cj7kw8zix000804xflu11ldej',
+			question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?'
+		})
+
+		let question5 = new QuizQuestQuestion({
+			cuid: 'cj7kyajld000p04xfqm2ql2wz',
+			questID: 'cj7kw8zix000804xflu11ldej',
+			question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?'
+		})
+
+		QuizQuestQuestion.collection.insert([question1, question2, question3, question4, question5], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Quiz Question data')
+			}
+		})
+	})
+
+	QuizQuestRightAnswer.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let answer1 = new QuizQuestRightAnswer({ cuid: 'cj7kz49wy000w04xf5v3edqos', questionID: 'cj7ky9j3o000l04xfzyrcenjl', answer: 'Answer 1', isCorrect: true })
+		let answer2 = new QuizQuestRightAnswer({ cuid: 'cj7kz4dc1000x04xfd7p60x0e', questionID: 'cj7ky9j3o000l04xfzyrcenjl', answer: 'Answer 2', isCorrect: false })
+		let answer3 = new QuizQuestRightAnswer({ cuid: 'cj7kz4gpz000y04xf2vac9aiv', questionID: 'cj7ky9j3o000l04xfzyrcenjl', answer: 'Answer 3', isCorrect: false })
+
+		let answer4 = new QuizQuestRightAnswer({ cuid: 'cj7kz5epq000z04xf3np3u28n', questionID: 'cj7kyaajk000m04xfguhwc0fe', answer: 'Answer 1', isCorrect: true })
+		let answer5 = new QuizQuestRightAnswer({ cuid: 'cj7kz5isz001004xfv6empkjo', questionID: 'cj7kyaajk000m04xfguhwc0fe', answer: 'Answer 2', isCorrect: false })
+		let answer6 = new QuizQuestRightAnswer({ cuid: 'cj7kz5mzq001104xf5h3lim1c', questionID: 'cj7kyaajk000m04xfguhwc0fe', answer: 'Answer 3', isCorrect: false })
+
+		let answer7 = new QuizQuestRightAnswer({ cuid: 'cj7kz5q9w001204xfokw021uq', questionID: 'cj7kyaddj000n04xfd2hxhaak', answer: 'Answer 1', isCorrect: true })
+		let answer8 = new QuizQuestRightAnswer({ cuid: 'cj7kz5t88001304xf1n7hdthi', questionID: 'cj7kyaddj000n04xfd2hxhaak', answer: 'Answer 2', isCorrect: false })
+		let answer9 = new QuizQuestRightAnswer({ cuid: 'cj7kz5vtn001404xf79vh3ryf', questionID: 'cj7kyaddj000n04xfd2hxhaak', answer: 'Answer 3', isCorrect: false })
+
+		let answer10 = new QuizQuestRightAnswer({ cuid: 'cj7kz6011001504xfn069srbz', questionID: 'cj7kyagea000o04xf906mx2n8', answer: 'Answer 1', isCorrect: true })
+		let answer11 = new QuizQuestRightAnswer({ cuid: 'cj7kz639m001604xfsh6rpf5i', questionID: 'cj7kyagea000o04xf906mx2n8', answer: 'Answer 2', isCorrect: false })
+		let answer12 = new QuizQuestRightAnswer({ cuid: 'cj7kz660m001704xfeeu8gwb8', questionID: 'cj7kyagea000o04xf906mx2n8', answer: 'Answer 3', isCorrect: false })
+
+		let answer13 = new QuizQuestRightAnswer({ cuid: 'cj7kz6aeu001804xf65kefdd5', questionID: 'cj7kyajld000p04xfqm2ql2wz', answer: 'Answer 1', isCorrect: true })
+		let answer14 = new QuizQuestRightAnswer({ cuid: 'cj7kz6d5r001904xflyudxhxm', questionID: 'cj7kyajld000p04xfqm2ql2wz', answer: 'Answer 2', isCorrect: false })
+		let answer15 = new QuizQuestRightAnswer({ cuid: 'cj7kz6g6e001a04xfierpthcz', questionID: 'cj7kyajld000p04xfqm2ql2wz', answer: 'Answer 3', isCorrect: false })
+
+		QuizQuestRightAnswer.collection.insert([answer1, answer2, answer3, answer4, answer5, answer6, answer7, answer8, answer9, answer10, answer11, answer12, answer13, answer14, answer15],
+			(err) => {
+				if (err) {
+					console.log('Couldnt create dummy Quiz Answers data')
+				}
+			})
+	})
+
+	RiddleQuest.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let riddle = new RiddleQuest({
+			cuid: 'cj7kydct0000q04xf595pfy61',
+			questID: 'cj7kw9lwo000904xfyk8crcu9',
+			rightAnswer: 'riddle'
+		})
+
+		RiddleQuest.collection.insert([riddle], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Riddle Quest data')
+			}
+		})
+	})
+
+	OrderQuestPiece.count().exec( (err, count) => {
+		if (count > 0) {
+			return
+		}
+
+		let piece1 = new OrderQuestPiece({
+			cuid: 'cj7kygaho000r04xfqn5e0w6f',
+			questID: 'cj7kwbavf000a04xfpgviaxtv',
+			position: 1,
+			content: 'Single Responsibility'
+		})
+
+		let piece2 = new OrderQuestPiece({
+			cuid: 'cj7kyxwf4000s04xf2quzuma5',
+			questID: 'cj7kwbavf000a04xfpgviaxtv',
+			position: 2,
+			content: 'Open closed'
+		})
+
+		let piece3 = new OrderQuestPiece({
+			cuid: 'cj7kyy00r000t04xfgmncuzue',
+			questID: 'cj7kwbavf000a04xfpgviaxtv',
+			position: 3,
+			content: 'Liskov substitution'
+		})
+
+		let piece4 = new OrderQuestPiece({
+			cuid: 'cj7kyy36p000u04xfqmsa2ikw',
+			questID: 'cj7kwbavf000a04xfpgviaxtv',
+			position: 4,
+			content: 'Interface segregation'
+		})
+
+		let piece5 = new OrderQuestPiece({
+			cuid: 'cj7kyy669000v04xfd9pa77cf',
+			questID: 'cj7kwbavf000a04xfpgviaxtv',
+			position: 5,
+			content: 'Dependency inversion'
+		})
+
+		OrderQuestPiece.collection.insert([piece1, piece2, piece3, piece4, piece5], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Order Quest data')
+			}
+		})
+	})
 }
