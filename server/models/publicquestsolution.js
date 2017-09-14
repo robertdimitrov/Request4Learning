@@ -8,7 +8,7 @@ const PublicQuestSolutionSchema = new Schema({
 	publicQuestID: { type: String, required: true },
 	fileName: { type: String },
 	text: { type: String },
-	teamID: { type: String, required: true }
+	teamID: { type: String }
 })
 
 module.exports = mongoose.model('PublicQuestSolution', PublicQuestSolutionSchema)

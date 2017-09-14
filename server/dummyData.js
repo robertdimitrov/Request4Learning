@@ -14,6 +14,8 @@ const ForumTopicReply = require('./models/forumTopicReply')
 const ForumTopicReplyLike = require('./models/forumTopicReplyLike')
 const ForumPollOption = require('./models/forumPollOption')
 const ForumPollAnswer = require('./models/forumPollAnswer')
+const Quest = require('./models/quest')
+const QuestProgress = require('./models/questProgress')
 
 module.exports = () => {
 	addUsers()
@@ -30,6 +32,8 @@ module.exports = () => {
 	addForumTopicReplyLikes()
 	addForumPollOptions()
 	addForumPollAnswers()
+	addQuests()
+	addQuestProgress()
 }
 
 function addUsers() {
@@ -522,4 +526,156 @@ function addForumPollAnswers() {
 			}
 		})
 	})
+}
+
+function addQuests() {
+	Quest.count().exec( (err, count) => {
+		if (count > 0) { 
+			return
+		}
+
+		let date = new Date()
+
+		let quest1 = new Quest({
+			cuid: 'cj7kvmnws000304xfymng6rnz',
+			name: 'Simple Quest',
+			type: 'simple',
+			description: 'Simple Quest Description',
+			criteria: 'Simple Quest Criteria',
+			resources: 'Simple Quest Resources',
+			maxPoints: 10,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 7),
+			isMandatory: true 
+		})
+
+		let quest2 = new Quest({
+			cuid: 'cj7kw5m87000404xfe2abb0nj',
+			name: 'Pick The Winner Quest',
+			type: 'pickTheWinner',
+			description: 'Pick The Winner Quest Description',
+			criteria: 'Pick The Winner  Quest Criteria',
+			resources: 'Pick The Winner  Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 7),
+			isMandatory: false 
+		})
+
+		let quest3 = new Quest({
+			cuid: 'cj7kw6vlu000504xfhmfkdfzs',
+			name: 'Jigsaw Quest',
+			type: 'jigsaw',
+			description: 'Jigsaw Quest Description',
+			criteria: 'Jigsaw Quest Criteria',
+			resources: 'Jigsaw Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 7),
+			isMandatory: true 
+		})
+
+		let quest4 = new Quest({
+			cuid: 'cj7kw7j0p000604xfo36k2p82',
+			name: 'Token Quest',
+			type: 'token',
+			description: 'Token Quest Description',
+			criteria: 'Token Quest Criteria',
+			resources: 'Token Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 7),
+			isMandatory: false 
+		})
+
+		let quest5 = new Quest({
+			cuid: 'cj7kw88gv000704xf6igxgchs',
+			name: 'Empty Outlines Quest',
+			type: 'emptyOutlines',
+			description: 'Empty Outlines Quest Description',
+			criteria: 'Empty Outlines Quest Criteria',
+			resources: 'Empty Outlines Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 1),
+			isMandatory: true 
+		})
+
+		let quest6 = new Quest({
+			cuid: 'cj7kw8zix000804xflu11ldej',
+			name: 'Quiz Quest',
+			type: 'quiz',
+			description: 'Quiz Quest Description',
+			criteria: 'Quiz Quest Criteria',
+			resources: 'Quiz Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 1),
+			isMandatory: true 
+		})
+
+		let quest7 = new Quest({
+			cuid: 'cj7kw9lwo000904xfyk8crcu9',
+			name: 'Riddle Quest',
+			type: 'riddle',
+			description: 'Riddle Quest Description',
+			criteria: 'Riddle Quest Criteria',
+			resources: 'Riddle Quest Resources',
+			maxPoints: 10,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 7),
+			isMandatory: true 
+		})
+
+		let quest8 = new Quest({
+			cuid: 'cj7kwbavf000a04xfpgviaxtv',
+			name: 'Order Quest',
+			type: 'order',
+			description: 'Order Quest Description',
+			criteria: 'Order Quest Criteria',
+			resources: 'Order Quest Resources',
+			maxPoints: 5,
+			startDate: date.setDate(date.getDate() + 1),
+			dueDate: date.setDate(date.getDate() + 1),
+			isMandatory: true 
+		})
+
+		Quest.collection.insert([quest1, quest2, quest3, quest4, quest5, quest6, quest7, quest8], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Quest data')
+			}
+		})
+	})
+}
+
+function addQuestProgress() {
+	QuestProgress.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let date = new Date()
+
+		let questProgress1 = new QuestProgress({
+			cuid: 'cj7kx13zi000b04xfg3oroa06',
+			questID: 'cj7kvmnws000304xfymng6rnz',
+			teamID: 'cj7erkxk6000104057wc8ba0o',
+			dateStarted: date.setDate(date.getDate() + 1),
+			dateFinished: date.setDate(date.getDate() + 2),
+			points: 5
+		})
+
+		let questProgress2 = new QuestProgress({
+			cuid: 'cj7kx2rw4000c04xfsv29q1zi',
+			questID: 'cj7kvmnws000304xfymng6rnz',
+			teamID: 'cj7erlg3100030405hxwx56c3',
+			dateStarted: date.setDate(date.getDate() + 1)
+		})
+
+		QuestProgress.collection.insert([questProgress1, questProgress2], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Quest data')
+			}
+		})
+	}) 
 }
