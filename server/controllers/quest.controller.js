@@ -520,17 +520,70 @@ module.exports.checkSolutionExists = (req, res, next) => {
 }
 
 module.exports.getQuestSolution = (req, res, next) => {
-	PublicQuestsolution.findOne({ cuid: req.params.solutionid }).exec( (err, solution) => {
+	PublicQuestSolution.findOne({ cuid: req.params.solutionid }).exec( (err, solution) => {
+		if (err) {
+			return next({ message: err.message, status: httpCodes.internalServerError })
+		}
 		res.status(httpCodes.success).json({ data: solution })
 	})
 }
 
 module.exports.getQuestSolutionAssessment = (req, res, next) => {
-	
+	PublicQuestAssessment.find({ solutionID: req.params.solutionid }).exec( (err, assessments) => {
+		if (err) {
+			return next({ message: err.message, status: httpCodes.internalServerError })
+		}
+		res.status(httpCodes.success).json({ data: assessments })
+	})
 }
 
 module.exports.createQuestSolutionAssessment = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			PublicQuestSolution.findOne({ cuid: req.params.solutionid }).exec( (err, solution) => {
+				query(null, solution.teamID)
+			})
+		},
+		function(teamID, query) {
+			User.findOne({ cuid: req.user.id }).exec( (err, user) => {
+				if (user.teamID && user.teamID === teamID) {
+					return next({ message: 'A user can not rate their own solutions', status: httpCodes.badrequest })
+				}
+				query(null)
+			})
+		},
+		function(query) {
+			PublicQuestAssessment.count({ solutionID: req.params.solutionid, userID: req.user.id }).exec( (err, count) => {
+				if (count > 0) {
+					return next({ message: 'The user has already rated this solution', status: httpCodes.conflict })
+				}
+				query(null)
+			})
+		},
+		function(query) {
+			if ((!req.body.comment || req.body.comment.length == 0) && (!req.body.points || req.body.points < 0)) {
+				return next({ message: 'Either a comment or points must be sent', status: httpCodes.badrequest })
+			}
+
+			let comment = striptags(req.body.comment)
+			let points = req.body.points 
+
+			let assessment = new PublicQuestAssessment({
+				cuid: cuid(),
+				solutionID: req.params.solutionid,
+				userID: req.user.id,
+				points: points,
+				comment: comment
+			})
+
+			assessment.save( (err) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+				res.status(httpCodes.created).json({ data: assessment })
+			})
+		}
+	])
 }
 
 module.exports.getLeaderboard = (req, res, next) => {

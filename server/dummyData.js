@@ -809,7 +809,14 @@ function addQuestTypes() {
 			teamID: 'cj7erkxk6000104057wc8ba0o'
 		})
 
-		PublicQuestSolution.collection.insert([tokenQuestProgressTeam1, tokenQuestProgressTeam2, singleQuestSolution1], (err) => {
+		let singleQuestSolution2 = new PublicQuestSolution({
+			cuid: 'cj7mfvpjy000004x63dgxun3z',
+			questID: 'cj7kvmnws000304xfymng6rnz',
+			fileName: 'questSolution2.pdf',
+			teamID: 'cj7erlg3100030405hxwx56c3'
+		})
+
+		PublicQuestSolution.collection.insert([tokenQuestProgressTeam1, tokenQuestProgressTeam2, singleQuestSolution1, singleQuestSolution2], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Public Quest Solution data')
 			}
