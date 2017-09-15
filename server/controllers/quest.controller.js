@@ -205,11 +205,57 @@ module.exports.getQuest = (req, res, next) => {
 }
 
 module.exports.getQuestProgress = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			QuestProgress.find({ questID: req.params.id }).exec( (err, progresses) => {
+				progresses = JSON.parse(JSON.stringify(progresses))
+				query(null, progresses)
+			})
+		},
+		function(progresses, query) {
+			let teamIDs = progresses.map( p => p.teamID )
+			Team.find({ cuid: {$in: teamIDs}}).exec( (err, teams) => {
+
+				for (let p of progresses) {
+					p.hasFinished = p.dateFinished ? true : false	
+					for (let team of teams) {
+						if (p.teamID === team.cuid) {
+							p.teamName = team.name
+							p.teamAvatarAssetName = team.avatarAssetName
+						}
+					}
+				}
+				res.status(httpCodes.success).json({ data: progresses })
+			})
+		}
+	])
 }
 
 module.exports.startWorkOnQuest = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			User.findOne({ cuid: req.user.id}).exec( (err, user) => {
+				if (!user.teamID) {
+					return next({ message: 'User doesnt have a team', status: httpCodes.badrequest })
+				}
+				query(null, user.teamID)
+			})
+		},
+		function(teamID, query) {
+			let progress = new QuestProgress({
+				cuid: cuid(),
+				teamID: teamID,
+				questID: req.params.id
+			})
+
+			progress.save( (err) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+				res.status(httpCodes.created).json({ data: progress })
+			})
+		}
+	])
 }
 
 module.exports.getQuestSolutions = (req, res, next) => {
