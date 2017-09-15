@@ -17,7 +17,6 @@ Router.route('/quests/:id/progress')
 
 Router.route('/quests/:id/solutions')
 	.get(QuestController.checkQuestExists, QuestController.getQuestSolutions)
-	.post(QuestController.checkQuestExists, QuestController.createQuestSolution)
 
 Router.route('/quests/:id/solutions/:solutionid')
 	.get(QuestController.checkQuestExists, QuestController.checkSolutionExists, QuestController.getQuestSolution)
