@@ -18,11 +18,14 @@ const Quest = require('./models/quest')
 const QuestProgress = require('./models/questProgress')
 const PublicQuest = require('./models/publicQuest')
 const JigsawQuestResource = require('./models/jigsawQuestResource')
+const TokenQuestTeamWork = require('./models/tokenQuestTeamWork')
 const EmptyOutlinesQuest = require('./models/emptyOutlinesQuest')
+const EmptyOutlinesQuestRightAnswer = require('./models/emptyOutlinesQuestRightAnswer')
 const QuizQuestQuestion = require('./models/quizQuestQuestion')
 const QuizQuestRightAnswer = require('./models/quizQuestRightAnswer')
 const RiddleQuest = require('./models/riddleQuest')
 const OrderQuestPiece = require('./models/orderQuestPiece')
+const PublicQuestSolution = require('./models/publicQuestSolution')
 
 module.exports = () => {
 	addUsers()
@@ -751,7 +754,7 @@ function addQuestTypes() {
 
 		let resource = new JigsawQuestResource({
 			cuid: 'cj7kzdrn7001b04xfamzh0vve',
-			publicQuestID: 'cj7kxzjew000i04xfryljpl5p',
+			questID: 'cj7kw6vlu000504xfhmfkdfzs',
 			text: 'Some text that needs to be summarized',
 			teamID: 'cj7erkxk6000104057wc8ba0o'
 		})
@@ -759,6 +762,54 @@ function addQuestTypes() {
 		JigsawQuestResource.collection.insert([resource], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Public Quest data')
+			}
+		})
+	})
+
+	PublicQuestSolution.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let tokenQuestProgressTeam1 = new PublicQuestSolution({
+			cuid: 'cj7ll0n0c0002041mwuznnp54',
+			questID: 'cj7kw7j0p000604xfo36k2p82',
+			text: 'The contribution of Team A',
+			teamID: 'cj7erlg3100030405hxwx56c3'
+		})
+
+		let tokenQuestProgressTeam2 = new PublicQuestSolution({
+			cuid: 'cj7ll1q7l0003041mv2kdd8nf',
+			questID: 'cj7kw7j0p000604xfo36k2p82',
+			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			teamID: 'cj7kxpkof000f04xf54f4f0k2'
+		})
+
+		PublicQuestSolution.collection.insert([tokenQuestProgressTeam1, tokenQuestProgressTeam2], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Public Quest Solution data')
+			}
+		})
+	})
+
+	TokenQuestTeamWork.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let date = new Date()
+
+		let tokenQuestWork = new TokenQuestTeamWork({
+			cuid: 'cj7lkkn570001041mf3bjh5f7',
+			questID: 'cj7kw7j0p000604xfo36k2p82',
+			teamID: 'cj7erkxk6000104057wc8ba0o',
+			startDate: date,
+			endDate: date.setDate(date.getDate() + 1)
+		})
+
+		TokenQuestTeamWork.collection.insert(tokenQuestWork, (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Token Quest Team Work data')
 			}
 		})
 	})
@@ -777,6 +828,53 @@ function addQuestTypes() {
 		emptyOutlinesQuest.collection.insert([emptyOutlinesQuest], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Empty Outlines Quest data')
+			}
+		})
+	})
+
+	EmptyOutlinesQuestRightAnswer.count().exec( (err, count) => {
+		if (count > 0) {
+			return 
+		}
+
+		let emptyOutlinesAnswer1 = new EmptyOutlinesQuestRightAnswer({
+			cuid: 'cj7llkfcf0004041m94dtxtz0',
+			emptyOutlinesQuestID: 'cj7ky43bv000k04xfy2k89t1t',
+			field: '(1)',
+			answer: 'Answer 1'
+		})
+
+		let emptyOutlinesAnswer2 = new EmptyOutlinesQuestRightAnswer({
+			cuid: 'cj7lllxze0005041m299806nf',
+			emptyOutlinesQuestID: 'cj7ky43bv000k04xfy2k89t1t',
+			field: '(2)',
+			answer: 'Answer 2'
+		})
+
+		let emptyOutlinesAnswer3 = new EmptyOutlinesQuestRightAnswer({
+			cuid: 'cj7llm2j60006041mg1sky5gf',
+			emptyOutlinesQuestID: 'cj7ky43bv000k04xfy2k89t1t',
+			field: '(3)',
+			answer: 'Answer 3'
+		})
+
+		let emptyOutlinesAnswer4 = new EmptyOutlinesQuestRightAnswer({
+			cuid: 'cj7llm69y0007041mztz4qdqf',
+			emptyOutlinesQuestID: 'cj7ky43bv000k04xfy2k89t1t',
+			field: '(4)',
+			answer: 'Answer 4'
+		})
+
+		let emptyOutlinesAnswer5 = new EmptyOutlinesQuestRightAnswer({
+			cuid: 'cj7llmbjw0008041m99s2bb7u',
+			emptyOutlinesQuestID: 'cj7ky43bv000k04xfy2k89t1t',
+			field: '(5)',
+			answer: 'Answer 5'
+		})
+
+		EmptyOutlinesQuestRightAnswer.collection.insert([emptyOutlinesAnswer1, emptyOutlinesAnswer2, emptyOutlinesAnswer3, emptyOutlinesAnswer4, emptyOutlinesAnswer5], (err) => {
+			if (err) {
+				console.log('Couldnt create dummy Empty Outlines Right Answer data')
 			}
 		})
 	})

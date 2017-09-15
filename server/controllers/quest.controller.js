@@ -8,6 +8,14 @@ const Quest = require('../models/quest')
 const QuestProgress = require('../models/questProgress')
 const Team = require('../models/team')
 const User = require('../models/user')
+const JigsawQuestResource = require('../models/jigsawQuestResource')
+const TokenQuestTeamWork = require('../models/tokenQuestTeamWork')
+const PublicQuestSolution = require('../models/publicQuestSolution')
+const EmptyOutlinesQuest = require('../models/emptyOutlinesQuest')
+const EmptyOutlinesQuestRightAnswer = require('../models/emptyOutlinesQuestRightAnswer')
+const QuizQuestQuestion = require('../models/quizQuestQuestion')
+const QuizQuestRightAnswer = require('../models/quizQuestRightAnswer')
+const OrderQuestPiece = require('../models/orderQuestPiece')
 
 const httpCodes = require('../utils/httpcodes')
 
@@ -65,26 +73,99 @@ module.exports.checkQuestExists = (req, res, next) => {
 }
 
 let getJigsawQuestInformation = (quest, teamID, query) => {
-	query(null, quest)
+	JigsawQuestResource.findOne({ teamID: teamID, questID: quest.cuid }).exec( (err, resource) => {
+		if (resource.text) {
+			quest.questData = { resource: resource.text }
+		}
+		query(null, quest)
+	})
+}
+
+let getTokenQuestInformation = (quest, teamID, query) => {
+	async.series([
+		function(tokenQuery) {
+			PublicQuestSolution.find({ questID: quest.cuid }).sort('dateSubmitted').exec( (err, solutions) => {
+				let lastSolution = solutions[solutions.length-1]
+				if (lastSolution) {
+					quest.questData = {}
+					quest.questData.text = lastSolution.text
+				}
+				tokenQuery()
+			})
+		},
+		function(tokenQuery) {
+			TokenQuestTeamWork.findOne({ questID: quest.cuid, teamID: teamID }).exec( (err, teamwork) => {
+				if (teamwork) {
+					quest.questData.teamStartDate = teamwork.startDate
+					quest.questData.teamEndDate = teamwork.endDate
+				}
+				query(null, quest)
+			}) 
+		}
+	])
 }
 
 let getEmptyOutlinesQuestInformation = (quest, teamID, query) => {
-	query(null, quest)
+	async.waterfall([
+		function(emptyOutlinesQuery) {
+			EmptyOutlinesQuest.findOne({ questID: quest.cuid }).exec( (err, emptyOutlinesQuest) => {
+				if (emptyOutlinesQuest) {
+					quest.questData = {}
+					quest.questData.text = emptyOutlinesQuest.text
+				}
+				emptyOutlinesQuery(null, emptyOutlinesQuest.cuid)
+			})
+		},
+		function(emptyOutlinesQuestID, emptyOutlinesQuery) {
+			EmptyOutlinesQuestRightAnswer.find({ emptyOutlinesQuestID: emptyOutlinesQuestID }).exec( (err, answers) => {
+				if (answers) {
+					let fields = answers.map( a => a.field )
+					quest.questData.fields = fields
+				}
+				query(null, quest)
+			})
+		}
+	])
 }
 
 let getQuizQuestInformation = (quest, teamID, query) => {
-	query(null, quest)
-}
+	async.waterfall([
+		function(quizQuery) {
+			QuizQuestQuestion.find({ questID: quest.cuid }, '-_id -questID').exec( (err, questions) => {
+				quizQuery(null, questions)
+			})
+		},
+		function(questions, quizQuery) {
+			let questionIDs = questions.map( q => q.cuid )
 
-let getRiddleQuestInformation = (quest, teamID, query) => {
-	query(null, quest)
+			QuizQuestRightAnswer.find({ questionID: {$in: questionIDs }}).exec( (err, questAnswers) => {
+				let questData = []
+
+				for (let question of questions) {
+					let answers = []
+					for (let qa of questAnswers) {
+						if (qa.questionID === question.cuid) {
+							answers.push(qa.answer)
+						}
+					}
+					questData.push({ question, answers })
+				}
+
+				quest.questData = questData
+				query(null, quest)
+			})
+		}
+	])
 }
 
 let getOrderQuestInformation = (quest, teamID, query) => {
-	query(null, quest)
+	OrderQuestPiece.find({ questID: quest.cuid }, '-position -_id -questID').exec( (err, pieces) => {
+		if (pieces) {
+			quest.questData = pieces
+		}
+		query(null, quest)
+	})
 }
-
-
 
 module.exports.getQuest = (req, res, next) => {
 	async.waterfall([
@@ -103,15 +184,16 @@ module.exports.getQuest = (req, res, next) => {
 		},
 		function(quest, teamID, query) {
 			QuestProgress.findOne({ questID: req.params.id, teamID: teamID}).exec( (err, qp) => {
-				if (!qp || !qp.dateStarted) {
-					return res.status(httpCodes.success).json({ data: quest })
-				}
+				// if (!qp || !qp.dateStarted) {
+				// 	return res.status(httpCodes.success).json({ data: quest })
+				// }
+				quest = JSON.parse(JSON.stringify(quest))
 				switch(quest.type) {
 					case 'jigsaw': getJigsawQuestInformation(quest, teamID, query); break
-					case 'jigsaw': getEmptyOutlinesQuestInformation(quest, teamID, query); break
-					case 'jigsaw': getQuizQuestInformation(quest, teamID, query); break
-					case 'jigsaw': getRiddleQuestInformation(quest, teamID, query); break
-					case 'jigsaw': getOrderQuestInformation(quest, teamID, query); break
+					case 'token': getTokenQuestInformation(quest, teamID, query); break
+					case 'emptyOutlines': getEmptyOutlinesQuestInformation(quest, teamID, query); break
+					case 'quiz': getQuizQuestInformation(quest, teamID, query); break
+					case 'order': getOrderQuestInformation(quest, teamID, query); break
 					default: query(null, quest)
 				}
 			})
