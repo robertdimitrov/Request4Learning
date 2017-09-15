@@ -169,7 +169,7 @@ function addTeams() {
 			motto: 'Motto Team 3'
 		})
 
-		Team.collection.insert([team1, team2], (error) => {
+		Team.collection.insert([team1, team2, team3], (error) => {
 			if (error) {
 				console.log('Couldnt create dummy Team data')
 			}
@@ -697,10 +697,20 @@ function addQuestProgress() {
 			questID: 'cj7kw6vlu000504xfhmfkdfzs',
 			teamID: 'cj7erkxk6000104057wc8ba0o',
 			dateStarted: date.setDate(date.getDate() + 1),
-			dateFinished: date.setDate(date.getDate() + 2)
+			dateFinished: date.setDate(date.getDate() + 2),
+			points: 2
 		})
 
-		QuestProgress.collection.insert([questProgress1, questProgress2, questProgress3], (err) => {
+		let questProgress4 = new QuestProgress({
+			cuid: 'cj7logq3g000204266ox2kjex',
+			questID: 'cj7kvmnws000304xfymng6rnz',
+			teamID: 'cj7kxpkof000f04xf54f4f0k2',
+			dateStarted: date.setDate(date.getDate() + 1),
+			dateFinished: date.setDate(date.getDate() + 2),
+			points: 6
+		})
+
+		QuestProgress.collection.insert([questProgress1, questProgress2, questProgress3, questProgress4], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Quest data')
 			}

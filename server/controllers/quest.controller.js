@@ -283,6 +283,40 @@ module.exports.createQuestSolutionAssessment = (req, res, next) => {
 }
 
 module.exports.getLeaderboard = (req, res, next) => {
-	
+	async.waterfall([
+		function(query) {
+			Team.find().exec( (err, teams) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+				teams = JSON.parse(JSON.stringify(teams))
+
+				for (let team of teams) {
+					team.points = 0
+					team.questsSolved = 0
+				}
+				query(null, teams)
+			})
+		},
+		function(teams, query) {
+			QuestProgress.find({ points: { $gt: 0 } }).exec( (err, progresses) => {
+				if (err) {
+					return next({ message: err.message, status: httpCodes.internalServerError })
+				}
+				for (let progress of progresses) {
+					for (let team of teams) {
+						if (team.cuid === progress.teamID) {
+							team.points += progress.points
+							team.questsSolved += 1
+						}
+					}
+				}
+
+				teams = teams.sort( (a,b) => a.points < b.points)
+
+				res.status(httpCodes.success).json({ data: teams })
+			})
+		}
+	])
 }
 
