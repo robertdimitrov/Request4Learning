@@ -21,11 +21,11 @@ Router.route('/teams/:teamid/avatar')
 
 Router.route('/teams/:teamid/comments')
 	.get(TeamController.sameTeamCheck, TeamController.getTeamComments)
-	.put(TeamController.sameTeamCheck, TeamController.createTeamComment)
+	.post(TeamController.sameTeamCheck, TeamController.createTeamComment)
 
 Router.route('/teams/:teamid/tasks')
 	.get(TeamController.sameTeamCheck, TeamController.getTeamTasks)
-	.put(TeamController.sameTeamCheck, TeamController.createTeamTask)
+	.post(TeamController.sameTeamCheck, TeamController.createTeamTask)
 
 Router.route('/teams/:teamid/tasks/:taskid')
 	.patch(TeamController.sameTeamCheck, TeamController.updateTeamTask)
@@ -33,7 +33,7 @@ Router.route('/teams/:teamid/tasks/:taskid')
 
 Router.route('/team-invitations')
 	.get(TeamController.getTeamInvitations)
-	.put(TeamController.createTeamInvitation)
+	.post(TeamController.createTeamInvitation)
 
 Router.route('/team-invitations/:invitationid')
 	.patch(TeamController.updateTeamInvitation)

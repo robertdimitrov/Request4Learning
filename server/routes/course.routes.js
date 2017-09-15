@@ -13,6 +13,6 @@ Router.route('/course/announcements')
 
 Router.route('/course/feedbacks')
 	.get(CourseController.getCourseFeedbacks)
-	.put(CourseController.createCourseFeedback)
+	.post(CourseController.createCourseFeedback)
 
 module.exports = Router

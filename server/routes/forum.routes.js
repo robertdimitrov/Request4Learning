@@ -7,7 +7,7 @@ const Router = express.Router()
 
 Router.route('/forum-topics')
 	.get(ForumController.getForumTopics)
-	.put(ForumController.createForumTopic)
+	.post(ForumController.createForumTopic)
 
 Router.route('/forum-topics/:topicid')
 	.get(ForumController.getForumTopic)
@@ -15,7 +15,7 @@ Router.route('/forum-topics/:topicid')
 
 Router.route('/forum-topics/:topicid/replies')
 	.get(ForumController.checkForumTopicExists, ForumController.getForumTopicReplies)
-	.put(ForumController.checkForumTopicExists, ForumController.createForumTopicReply)
+	.post(ForumController.checkForumTopicExists, ForumController.createForumTopicReply)
 
 Router.route('/forum-topics/:topicid/replies/:replyid')
 	.delete(ForumController.checkForumTopicExists, ForumController.deleteForumTopicReply)
@@ -23,18 +23,18 @@ Router.route('/forum-topics/:topicid/replies/:replyid')
 
 Router.route('/forum-topics/:topicid/replies/:replyid/likes')
 	.get(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.getForumTopicReplyLikes)
-	.put(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.createForumTopicReplyLike)
+	.post(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.createForumTopicReplyLike)
 
 Router.route('/forum-topics/:topicid/replies/:replyid/likes/:likeid')
 	.delete(ForumController.checkForumTopicExists, ForumController.checkForumTopicReplyExists, ForumController.deleteForumTopicReplyLike)
 
 Router.route('/forum-topics/:topicid/poll-options')
 	.get(ForumController.checkForumTopicExists, ForumController.getForumPollOptions)
-	.put(ForumController.checkForumTopicExists, ForumController.createForumPollOptions)
+	.post(ForumController.checkForumTopicExists, ForumController.createForumPollOptions)
 
 Router.route('/forum-topics/:topicid/poll-answers')
 	.get(ForumController.checkForumTopicExists, ForumController.getForumPollAnswers)
-	.put(ForumController.checkForumTopicExists, ForumController.createForumPollanswer)
+	.post(ForumController.checkForumTopicExists, ForumController.createForumPollanswer)
 
 Router.route('/forum-stats/most-replies')
 	.get(ForumController.getUsersWithMostReplies)
