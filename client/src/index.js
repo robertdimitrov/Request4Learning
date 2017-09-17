@@ -1,11 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, browserHistory, Link } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 
-class App extends React.Component {
+import 'normalize.css'
+
+import routes from './routes'
+
+class AppRouter extends React.Component {
 	render() {
-		return (<h1>Hello</h1>)
+		return (
+			<BrowserRouter>
+				{routes}
+			</BrowserRouter>
+		)
 	}
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+ReactDOM.render(<AppRouter/>, document.getElementById('root'))
