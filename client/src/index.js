@@ -9,7 +9,7 @@ import routes from './routes'
 
 class AppRouter extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {isLoggedIn: false}
 		this.didSignin = this.didSignin.bind(this)
 	}

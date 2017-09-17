@@ -3,7 +3,7 @@ import AuthenticationController from '../../controllers/authentication'
 
 class Signin extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.authenticationController = new AuthenticationController()
 	}
 
