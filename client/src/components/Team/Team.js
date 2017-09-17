@@ -1,7 +1,5 @@
 import React from 'react'
 
-console.log('team')
-
 class Team extends React.Component {
 	render() {
 		return (

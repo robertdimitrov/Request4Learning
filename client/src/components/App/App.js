@@ -1,9 +1,7 @@
 import React from 'react'
 
-console.log('App')
-
 class App extends React.Component {
-	render() {
+	render() {	
 		return (
 			<div>
 				<h1>App</h1>

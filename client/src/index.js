@@ -4,10 +4,31 @@ import { BrowserRouter } from 'react-router-dom'
 
 import 'normalize.css'
 
+import Signin from './components/Signin/Signin'
 import routes from './routes'
 
 class AppRouter extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {isLoggedIn: false}
+		this.didSignin = this.didSignin.bind(this)
+	}
+
+	componentWillMount() {
+		let token = localStorage.getItem('jwt')
+		if (token && token.length > 0) {
+			this.setState({ isLoggedIn: false })	
+		}
+	}
+
+	didSignin() {
+		this.setState({ isLoggedIn: true })
+	}
+
 	render() {
+		if (!this.state.isLoggedIn) {
+			return <Signin didSignin={this.didSignin} />
+		}
 		return (
 			<BrowserRouter>
 				{routes}
