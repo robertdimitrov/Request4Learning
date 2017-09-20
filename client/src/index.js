@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
 import 'normalize.css'
+import './style.css'
 
 import Signin from './components/Signin/Signin'
 import routes from './routes'
@@ -17,7 +18,7 @@ class AppRouter extends React.Component {
 	componentWillMount() {
 		let token = localStorage.getItem('jwt')
 		if (token && token.length > 0) {
-			this.setState({ isLoggedIn: false })	
+			this.setState({ isLoggedIn: true })	
 		}
 	}
 

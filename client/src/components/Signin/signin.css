@@ -1,0 +1,40 @@
+.signin {
+	padding: 8px 24px;
+}
+
+.signin img {
+	margin: auto;
+	display: block;
+}
+
+.signin p {
+	margin-bottom: 8px;
+}
+
+.signin .signin-field {
+	margin: 16px 0;
+}
+
+.signin .signin-field:first-of-type {
+	margin-top: 32px;
+}
+
+.signin label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.signin input {
+	width: 100%;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0 8px;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+.signin button {
+	width: 100%;
+	margin: 24px 0 12px;
+}
+

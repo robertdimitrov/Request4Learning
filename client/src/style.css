@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
+
+* {
+	font-family: 'Open Sans', sans-serif;
+	color: '#333';
+	box-sizing: border-box;
+}
+
+*:focus {
+	outline-color: #E0DBEF;
+}
+
+.lighter-text {
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	color: #777;
+}
+
+.rounded-button {
+	background-color: #1B50C0;
+	min-width: 100px;
+	color: white;
+	border: none;
+	height: 40px;
+	border-radius: 20px;
+	font-weight: 300;
+}
+
+.rounded-button-full {
+	width: 100%;
+}
+
+.rounded-button:hover {
+	cursor: pointer;
+	background-color: #1643A2;
+}
+
+.center {
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
+.error {
+	color: #CF002F;
+}
+
+.hidden {
+	display: none;
+}
+
+.signin {
+	width: 400px;
+	margin: 10% auto;
+	box-shadow: 0px 0px 8px 2px #ddd;
+	transition: box-shadow .3s;
+}
+
+.signin:hover {
+	box-shadow: 0px 0px 12px 2px #ccc;
+}
+
+
