@@ -1,0 +1,30 @@
+.notificationBar {
+	position: relative;
+}
+
+.notificationBar .icon {
+	margin-top: 40px;
+	color: #1B50C0;
+	cursor: pointer;
+}
+
+.notification-count {
+	margin-left: -6px;
+	display: inline-block;
+	background-color: red;
+	width: 18px;
+	height: 18px;
+	border-radius: 100%;
+	text-align: center;
+	color: white;
+	font-size: 12px;
+	padding: 3px 0;
+}
+
+.notification-list {
+	position: absolute;
+	left: -225px;
+	top: 75px;
+	right: 0;
+	bottom: 0;
+}

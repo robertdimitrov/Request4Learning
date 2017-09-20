@@ -40,7 +40,6 @@ class Signin extends React.Component {
 			}
 			this.cleanInputFields()
 		}).catch( (err) => {
-			console.log(err)
 			this.cleanInputFields()
 			this.setState({falseCredentials: true})
 		})

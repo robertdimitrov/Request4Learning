@@ -1,4 +1,4 @@
-const serverURL = 'http://localhost:3000/'
+const serverURL = 'http://localhost:3000'
 
 const paths = {
 	signin: '/signin',
@@ -17,7 +17,7 @@ const paths = {
 }
 
 for (let path in paths) {
-	paths[path] = serverURL + path
+	paths[path] = serverURL + paths[path]
 }
 
 export default paths

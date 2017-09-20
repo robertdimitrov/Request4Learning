@@ -1,0 +1,19 @@
+header {
+	display: flex;
+	flex-wrap: nowrap;
+	padding: 0 72px;
+	box-shadow: 0 2px 12px 2px rgba(0,0,0,0.05);
+}
+
+header .logo {
+	flex: 5;
+}
+
+header .navbar {
+	flex: 6;
+}
+
+header .notification-bar {
+	flex: 1;
+}
+

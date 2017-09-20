@@ -1,0 +1,18 @@
+nav {
+	margin-top: 40px;
+}
+
+nav a {
+	color: #111;
+	font-size: 16px;
+	margin-right: 40px;
+	text-decoration: none;
+}
+
+nav a:hover {
+	color: #1B50C0;
+}
+
+.selected {
+	color: #1B50C0;
+}

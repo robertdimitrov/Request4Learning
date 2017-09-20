@@ -1,11 +1,20 @@
 import React from 'react'
 
+import Navbar from './Navbar/Navbar'
+import NotificationBar from './NotificationBar/NotificationBar'
+
+import './header.css'
+
 class Header extends React.Component {
 	render() {
 		return (
-			<div>
-				<h1>Header</h1>
-			</div>
+			<header className='header'>
+				<a className='logo' href='/'>
+					<img src='public/assets/logo.png' alt='logo'/>
+				</a>
+				<Navbar/>
+				<NotificationBar/>
+			</header>
 		)
 	}
 }
