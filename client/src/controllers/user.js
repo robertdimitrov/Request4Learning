@@ -17,6 +17,10 @@ class UserController {
 		return prepareRequest(Request.get(paths.users + '/' + userID))
 	}
 
+	getMe(userID) {
+		return prepareRequest(Request.get(paths.users + '/' + this.user.id))
+	}
+
 	updateUser(userID, user) {
 		return prepareRequest(Request.patch(paths.users + '/' + this.user.id).send({ characterAssetName: user.characterAssetName, publicName: user.publicName }))
 	}

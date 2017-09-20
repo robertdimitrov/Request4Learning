@@ -1,0 +1,30 @@
+.dashboard-section {
+	margin-bottom: 32px;
+}
+
+.dashboard {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.newsfeed {
+	flex: 3;
+	margin-right: 32px;
+	padding-right: 32px;
+}
+
+.profile {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.dashboard {
+		flex-direction: column;
+	}
+
+	.newsfeed {
+		margin-right: 0;
+		padding-right: 0;
+	}
+}

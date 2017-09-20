@@ -1,10 +1,13 @@
 import Request from 'superagent'
 import paths from './paths'
 import prepareRequest from './prepareRequest'
+import AuthenticationController from './authentication'
 
 class TeamController {
 	constructor() {
 		this.token = localStorage.getItem('jwt')
+		this.authenticationController = new AuthenticationController()
+		this.user = this.authenticationController.decodeUser()
 	}
 
 	getTeams() {
@@ -16,35 +19,35 @@ class TeamController {
 	}
 
 	updateTeam(teamID, team) {
-		return prepareRequest(Request.patch(paths.teams + '/' + teamID).send({ name: team.name, motto: team.motto }))
+		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID).send({ name: team.name, motto: team.motto }))
 	}
 
 	updateTeamAvatar(teamID, teamAvatar) {
-		return prepareRequest(Request.patch(paths.teams + '/' + teamID + '/avatar').send({ teamAvatar }))
+		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID + '/avatar').send({ teamAvatar }))
 	}
 
 	getTeamComments(teamID) {
-		return prepareRequest(Request.get(paths.teams + '/' + teamID + '/comments'))
+		return prepareRequest(Request.get(paths.teams + '/' + this.user.teamID + '/comments'))
 	}
 
 	createTeamComment(teamID, text) {
-		return prepareRequest(Request.post(paths.teams + '/' + teamID + '/comments').send({ text }))
+		return prepareRequest(Request.post(paths.teams + '/' + this.user.teamID + '/comments').send({ text }))
 	}
 
 	getTeamTasks(teamID) {
-		return prepareRequest(Request.get(paths.teams + '/' + teamID + '/tasks'))
+		return prepareRequest(Request.get(paths.teams + '/' + this.user.teamID + '/tasks'))
 	}
 
 	createTeamTask(teamID, text) {
-		return prepareRequest(Request.post(paths.teams + '/' + teamID + '/tasks').send({ text }))
+		return prepareRequest(Request.post(paths.teams + '/' + this.user.teamID + '/tasks').send({ text }))
 	}
 
 	updateTeamTask(teamID, taskID, task) {
-		return prepareRequest(Request.patch(paths.teams + '/' + teamID + '/tasks/' + taskID).send({ text: task.text, assignee: task.assignee, status: task.status}))
+		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID + '/tasks/' + taskID).send({ text: task.text, assignee: task.assignee, status: task.status}))
 	}
 
 	deleteTeamTask(teamID, taskID) {
-		return prepareRequest(Request.delete(paths.teams + '/' + teamID + '/tasks/' + taskID))
+		return prepareRequest(Request.delete(paths.teams + '/' + this.user.teamID + '/tasks/' + taskID))
 	}
 
 	getTeamInvitations() {
