@@ -6,7 +6,7 @@ import './navbar.css'
 class Navbar extends React.Component {
 	render() {
 		return (
-			<nav className='navbar'>
+			<nav className={this.props.class} >
 				<NavLink to='/quests' activeClassName='selected'>Quests</NavLink>
 				<NavLink to='/leaderboard' activeClassName='selected'>Leaderboard</NavLink>
 				<NavLink to='/team' activeClassName='selected'>Team</NavLink>

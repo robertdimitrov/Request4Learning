@@ -28,3 +28,13 @@
 	right: 0;
 	bottom: 0;
 }
+
+@media screen and (max-width: 576px) {
+	.notification-list {
+		position: absolute;
+		left: -275px;
+		top: 75px;
+		right: 0;
+		bottom: 0;
+	}
+}

@@ -13,6 +13,7 @@ import NotFound from './components/NotFound/NotFound'
 export default (
 	<div>
 		<Header />
+		<div className='content'>
 		<Switch>
 			<Route exact={true} path='/' component={App}/>
 			<Route path='/forum/:id' component={ForumTopic}/>
@@ -22,5 +23,6 @@ export default (
 			<Route path='/leaderboard' component={Leaderboard}/>
 			<Route component={NotFound}/>
 		</Switch>
+		</div>
 	</div>
 )

@@ -15,6 +15,12 @@ a {
 	color: #333;
 }
 
+.content {
+	width: 60%;
+	margin: auto;
+	padding: 16px;
+}
+
 .lighter-text {
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
@@ -65,4 +71,15 @@ a {
 	box-shadow: 0px 0px 12px 2px #ccc;
 }
 
+@media screen and (max-width: 1024px) {
+	.content {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.content {
+		width: 100%;
+	}
+}
 

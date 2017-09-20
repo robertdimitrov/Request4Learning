@@ -1,19 +1,36 @@
 header {
-	display: flex;
-	flex-wrap: nowrap;
 	padding: 0 72px;
 	box-shadow: 0 2px 12px 2px rgba(0,0,0,0.05);
 }
 
-header .logo {
+.header {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.header .logo {
 	flex: 5;
 }
 
-header .navbar {
+.header .navbar-desktop {
 	flex: 6;
 }
 
-header .notification-bar {
+.header .notification-bar {
 	flex: 1;
 }
 
+.navbar-responsive {
+	display: none;
+}
+
+@media screen and (max-width: 1024px) {
+	header {
+		padding: 0 16px;
+	}
+
+	.navbar-responsive {
+		display: block;
+		padding-bottom: 16px;
+	}
+}
