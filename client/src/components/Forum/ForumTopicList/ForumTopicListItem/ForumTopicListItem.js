@@ -1,5 +1,6 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
+import { Link } from 'react-router-dom'
 
 import UserController from '../../../../controllers/user'
 import ForumController from '../../../../controllers/forum'
@@ -40,7 +41,7 @@ class ForumTopicListItem extends React.Component {
 
 		return (
 			<div className='forum-topic-list-item'>
-				<a href={'/forum/' + id}>
+				<Link to={'/forum/' + id}>
 					<div>
 						<div className='forum-item-header'>
 							<h4 className='forum-item-title'>{title}</h4>
@@ -56,7 +57,7 @@ class ForumTopicListItem extends React.Component {
 							<span className='smaller-text lighter-text'>{this.state.repliesCount}</span>
 						</div>
 					</div>
-				</a>
+				</Link>
 			</div>
 		)
 	}

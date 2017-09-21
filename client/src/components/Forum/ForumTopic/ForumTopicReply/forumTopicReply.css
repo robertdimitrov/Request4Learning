@@ -1,0 +1,58 @@
+.forum-topic-reply {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 16px;
+	box-shadow: 0 0 12px 2px #eee;
+}
+
+.forum-topic-reply-meta {
+	flex: 1;
+	border: 1px solid #eee;
+	border-right: none;
+	padding: 16px;
+}
+
+.forum-topic-reply-meta img {
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin: auto;
+	border: 1px solid #eee;
+}
+
+.forum-topic-reply-meta p {
+	text-align: center;
+	padding: 0;
+	margin: 8px 0;
+}
+
+.forum-topic-reply-content {
+	flex: 4;
+	border: 1px solid #eee;
+	padding: 16px 24px;
+	display: flex;
+	flex-direction: column;
+}
+
+.forum-topic-reply .comment {
+	flex: 5;
+}
+
+.forum-topic-reply .likes {
+	flex: 1;
+}
+
+.forum-topic-reply .likes .icon {
+	cursor: pointer;
+	color: #1B50C0;
+}
+
+@media screen and (max-width: 768px) {
+	.forum-topic-reply {
+		flex-direction: column;
+	}
+
+	.forum-topic-reply-meta{
+		border-right: 1px solid #eee;
+	}
+}

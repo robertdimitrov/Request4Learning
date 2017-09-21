@@ -15,12 +15,10 @@ class NotificationBar extends React.Component {
 	}
 
 	componentWillMount() {
-		console.log(this.userController)
 		this.userController.getUserNotifications().then( (response) => {
 			response = JSON.parse(response.text)
 			let notifications = response.data
 			if (notifications) {
-				console.log(notifications)
 				this.setState({ hasNotifications: true, notificationsCount: notifications.length, notifications: notifications })
 			}
 		}).catch( (err) => {
