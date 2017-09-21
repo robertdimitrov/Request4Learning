@@ -1,0 +1,30 @@
+.quest .icon {
+	color: #333;
+	margin-right: 8px;
+}
+
+.quest-infobar {
+	display: flex;
+	max-width: 480px;
+	justify-content: space-between;
+}
+
+.quest-infobar-dueDate {
+	flex: 1;
+}
+
+.quest-infobar-mandatory {
+	flex: 1;	
+}
+
+.quest-infobar-points {
+	flex: 1;
+}
+
+.quest-content {
+	margin: 32px 0;
+}
+
+.quest-content p {
+	margin-bottom: 32px;
+}
