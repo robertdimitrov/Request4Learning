@@ -45,6 +45,7 @@ a {
 	height: 40px;
 	border-radius: 20px;
 	font-weight: 300;
+	padding: 8px 24px;
 }
 
 .rounded-button-full {

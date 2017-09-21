@@ -23,8 +23,13 @@
 
 .quest-content {
 	margin: 32px 0;
+	border-bottom: 1px solid #ddd;
 }
 
 .quest-content p {
 	margin-bottom: 32px;
+}
+
+.submitted-info .icon {
+	color: #1b50c0;
 }
