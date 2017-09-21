@@ -161,19 +161,22 @@ function addTeams() {
 		let team1 = new Team({
 			cuid: 'cj7erkxk6000104057wc8ba0o',
 			name: 'Astronaut',
-			motto: 'Astronaut'
+			motto: 'Astronaut',
+			avatarAssetName: 'team-1.png'
 		})
 
 		let team2 = new Team({
 			cuid: 'cj7erlg3100030405hxwx56c3',
 			name: 'Gruppe A',
-			motto: 'Motto'
+			motto: 'Motto',
+			avatarAssetName: 'team-2.png'
 		})
 
 		let team3 = new Team({
 			cuid: 'cj7kxpkof000f04xf54f4f0k2',
 			name: 'Team 3',
-			motto: 'Motto Team 3'
+			motto: 'Motto Team 3',
+			avatarAssetName: 'team-3.png'
 		})
 
 		Team.collection.insert([team1, team2, team3], (error) => {

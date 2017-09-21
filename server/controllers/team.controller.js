@@ -119,13 +119,31 @@ module.exports.updateTeamAvatar = (req, res, next) => {
 }
 
 module.exports.getTeamComments = (req, res, next) => {
-	TeamComment.find({ teamID: req.params.teamid }).exec( (err, comments) => {
-		if (err) {
-			return next({message: err.message, status: httpCodes.internalServerError})
+	async.waterfall([
+		function(query) {
+			TeamComment.find({ teamID: req.params.teamid }).exec( (err, comments) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.internalServerError})
+				}
+				query(null, comments)
+			})
+		},
+		function(comments, query) {
+			let authorIDs = comments.map( c => c.authorID )
+			User.find({ cuid: {$in: authorIDs}}).exec( (err, users) => {
+				comments = JSON.parse(JSON.stringify(comments))
+				for (let comment of comments) {
+					for (let user of users) {
+						if (comment.authorID === user.cuid) {
+							comment.avatarAssetName = user.avatarAssetName
+							comment.publicName = user.publicName || user.username
+						}
+					}
+				}
+				res.status(httpCodes.success).json({ data: comments })
+			})
 		}
-
-		res.status(httpCodes.success).json({ data: comments })
-	})
+	])
 }
 
 module.exports.createTeamComment = (req, res, next) => {

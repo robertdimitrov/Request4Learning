@@ -7,7 +7,7 @@ const TeamController = require('../controllers/team.controller')
 const Router = express.Router()
 
 const imageUpload = require('../utils/imageUpload')
-const avatar = imageUpload.single('team-avatar')
+const avatar = imageUpload.single('teamAvatar')
 
 Router.route('/teams')
 	.get(TeamController.getTeams)

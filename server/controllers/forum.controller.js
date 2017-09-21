@@ -110,7 +110,6 @@ module.exports.getForumTopicReplies = (req, res, next) => {
 			})			
 		},
 		function(dbReplies, query) {
-			console.log('test')
 			ForumTopicReplyLike.find({ topicID: req.params.topicid}).exec( (err, likes) => {
 
 				let replies = JSON.parse(JSON.stringify(dbReplies))
@@ -119,8 +118,21 @@ module.exports.getForumTopicReplies = (req, res, next) => {
 					r.likesCount = likes.filter(l => l.replyID === r.cuid).length
 					r.userHasLiked = likes.filter(l => l.authorID === req.user.id).length > 0
 				})
-
-				res.status(200).json({ data: replies })
+				query(null, replies)
+			})
+		},
+		function(replies, query) {
+			let replyAuthors = replies.map( r => r.authorID )
+			User.find({ cuid: {$in: replyAuthors}}).exec( (err, users) => {
+				for (let reply of replies) {
+					for (let user of users) {
+						if (reply.authorID === user.cuid) {
+							reply.avatarAssetName = user.avatarAssetName
+							reply.publicName = user.publicName || user.username
+						}
+					}
+				}
+				res.status(httpCodes.success).json({ data: replies })
 			})
 		}
 	])
@@ -227,8 +239,17 @@ module.exports.createForumTopicReplyLike = (req, res, next) => {
 	async.series([
 		function(query) {
 			ForumTopicReply.findOne({ cuid: req.params.replyid }).exec( (err, reply) => {
+
 				if (reply.authorID === req.user.id) {
 					return next({ message: 'An user can not like their own forum topic reply', status: httpCodes.badrequest })
+				}
+				query()
+			})
+		},
+		function(query) {
+			ForumTopicReplyLike.count({ replyID: req.params.replyid, userID: req.user.id}).exec( (err, count) => {
+				if (count > 0) {
+					return next({ message: 'An user can like a forum topic reply only once', status: httpCodes.badrequest })
 				}
 				query()
 			})

@@ -5,9 +5,11 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path')
 const jsonwebtoken = require('jsonwebtoken')
+const cors = require('cors')
 
 const config = require('./config.js')
-const dummyData = require('./dummyData')
+const exampleData = require('./exampleData')
+const httpCodes = require('./utils/httpcodes')
 
 const User = require('./models/user')
 const AuthenticationRoute = require('./routes/authentication.routes')
@@ -27,15 +29,18 @@ mongoose.connect(config.mongoURL, (err) => {
 		throw err
 	}
 	console.log("Connection to MongoDB established")
-	dummyData()
+	exampleData()
 })
+
+app.use(cors())
+app.options('*', cors())
 
 app.use(Express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }))
 
 
-app.use((req,res,next) => {
+app.use( (req, res, next) => {
 	if (req.headers && req.headers.authorization) {
 		jsonwebtoken.verify(req.headers.authorization, 'REQUEST4LEARNING', (err, decode) => {
 			req.user = err ? undefined : decode
@@ -55,7 +60,7 @@ app.use(ForumRoute)
 app.use(QuestRoute)
 
 app.use((err, req, res, next) => {
-	res.status(err.status || 500)
+	res.status(err.status || httpCodes.internalServerError)
 	return res.json({
 		error: {
 			message: err.message
@@ -63,7 +68,6 @@ app.use((err, req, res, next) => {
 	})
 })
 
-// Start app
 app.listen(config.port, (error) => {
 	if(!error){
 		console.log("Node server is now running on port " + config.port)
