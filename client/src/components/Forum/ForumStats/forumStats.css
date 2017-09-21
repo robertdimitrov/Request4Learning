@@ -1,0 +1,24 @@
+.forum-stats-section { 
+	width: 100%;
+	border: 1px solid #ddd;
+	padding: 8px;
+	margin: 16px 0;
+}
+
+.forum-stats-item img {
+	width: 24px;
+	height: 24px;
+}
+
+.forum-stats-item-avatar{
+	width: 30px;
+}
+
+.forum-stats-section table{
+	width: 100%;
+}
+
+.forum-stats-section td {
+    text-align: left;
+    padding: 8px;
+}

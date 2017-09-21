@@ -1,0 +1,32 @@
+.forum-content {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.forum-topics {
+	flex: 3;
+	margin-right: 32px;
+	padding-right: 32px;
+}
+
+.forum-stats {
+	flex: 1;
+}
+
+.forum-stats h2 {
+	padding-top: 0;
+	margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.forum-content {
+		flex-direction: column;
+	}
+
+	.forum-topics {
+		margin-right: 0;
+		padding-right: 0;
+	}
+}

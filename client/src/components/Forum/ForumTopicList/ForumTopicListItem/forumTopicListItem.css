@@ -1,9 +1,78 @@
 .forum-topic-list-item {
 	width: 100%;
 	padding: 8px 16px;
+	border: 1px solid rgba(0,0,0,0.1);
+	margin-bottom: 12px;
+	transition: box-shadow .3s;
 }
 
-.forum-topic-list-item h4 {
+.forum-topic-list-item:hover{
+	box-shadow: 0 0 12px 2px #ddd;
+}
+
+.forum-item-title {
 	padding: 0;
 	margin: 0;
+	display: inline;
+	float: left;
+}
+
+.forum-item-type { 
+	background-color: red;
+	display: inline-block;
+	float: right;
+	padding: 2px 8px;
+	border-radius: 6px;
+	text-align: center;
+}
+
+.forum-topic-list-item .discussion {
+	background-color: #555;
+	color: white;
+}
+
+.forum-topic-list-item .question {
+	background-color: #CF002F;
+	color: white;
+}
+
+.forum-topic-list-item .tutorial {
+	background-color: #08a353;
+	color: white;
+}
+
+.forum-topic-list-item .poll {
+	background-color: #1b50c0;
+	color: white;
+}
+
+.forum-item-footer {
+	padding-top: 12px;
+	clear: both;
+}
+
+.forum-item-avatar {
+	margin-top: 0;
+	width: 12px;
+	height: 12px;
+}
+
+.forum-item-avatar img{
+	width: 24px;
+	height: 24px;
+}
+
+.forum-item-author {
+	font-style: italic;
+	margin-right: 8px;
+	display: inline-block;
+}
+
+.forum-item-footer .icon {
+	color: #777;
+	margin-right: 2px;
+}
+
+.forum-item-date {
+	margin-right: 8px;
 }
