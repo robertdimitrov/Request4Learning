@@ -6,4 +6,21 @@
 .team-comment-list-item h4 {
 	padding: 0;
 	margin: 0;
+	margin-bottom: 8px;
+}
+
+.team-comment-item-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.team-comment-list-item .name {
+	margin-right: 8px;
+	font-style: italic;
+}
+
+.team-comment-list-item .avatar {
+	width: 24px;
+	height: 24px;
+	margin-right: 8px;
 }

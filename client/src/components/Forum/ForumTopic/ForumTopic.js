@@ -68,8 +68,8 @@ class ForumTopic extends React.Component {
 				}
 				<h1>{this.state.topic.title}</h1>
 				{replies}
-				<input type='text' ref='commentInput' placeholder='Your comment'/>
-				<button className='rounded-button' onClick={this.handleSubmit}>Add a reply</button>
+				<input type='text' className='form-input' ref='commentInput' placeholder='Your comment'/>
+				<button className='rounded-button form-button' onClick={this.handleSubmit}>Add a reply</button>
 			</section>
 		)
 	}

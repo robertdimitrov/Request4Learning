@@ -1,0 +1,13 @@
+.team .active {
+	color: #1B50C0;
+}
+
+.team .subtitle {
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 32px;
+}
+
+.team-nav {
+	margin-bottom: 32px;
+}

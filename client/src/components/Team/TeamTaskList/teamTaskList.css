@@ -1,0 +1,26 @@
+.team-task-item {
+	clear: both;
+	height: 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 16px;
+	padding: 8px 16px;
+	transition: box-shadow .3s;
+}
+
+.team-task-item:hover{ 
+	box-shadow: 0 0 8px 2px #ddd;
+ }
+
+.team-task-item span {
+	float: left;
+}
+
+.team-task-item .icon {
+	float: right;
+	color: #CF002F;
+	cursor: pointer;
+}
+
+.team-tasks {
+	margin-bottom: 32px;
+}

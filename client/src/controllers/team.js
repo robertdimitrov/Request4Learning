@@ -18,35 +18,35 @@ class TeamController {
 		return prepareRequest(Request.get(paths.teams + '/' + teamID))
 	}
 
-	updateTeam(teamID, team) {
+	updateTeam(team) {
 		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID).send({ name: team.name, motto: team.motto }))
 	}
 
-	updateTeamAvatar(teamID, teamAvatar) {
+	updateTeamAvatar(teamAvatar) {
 		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID + '/avatar').send({ teamAvatar }))
 	}
 
-	getTeamComments(teamID) {
+	getTeamComments() {
 		return prepareRequest(Request.get(paths.teams + '/' + this.user.teamID + '/comments'))
 	}
 
-	createTeamComment(teamID, text) {
+	createTeamComment(text) {
 		return prepareRequest(Request.post(paths.teams + '/' + this.user.teamID + '/comments').send({ text }))
 	}
 
-	getTeamTasks(teamID) {
+	getTeamTasks() {
 		return prepareRequest(Request.get(paths.teams + '/' + this.user.teamID + '/tasks'))
 	}
 
-	createTeamTask(teamID, text) {
+	createTeamTask(text) {
 		return prepareRequest(Request.post(paths.teams + '/' + this.user.teamID + '/tasks').send({ text }))
 	}
 
-	updateTeamTask(teamID, taskID, task) {
+	updateTeamTask(taskID, task) {
 		return prepareRequest(Request.patch(paths.teams + '/' + this.user.teamID + '/tasks/' + taskID).send({ text: task.text, assignee: task.assignee, status: task.status}))
 	}
 
-	deleteTeamTask(teamID, taskID) {
+	deleteTeamTask(taskID) {
 		return prepareRequest(Request.delete(paths.teams + '/' + this.user.teamID + '/tasks/' + taskID))
 	}
 
