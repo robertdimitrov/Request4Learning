@@ -10,9 +10,17 @@ class ForumTopic extends React.Component {
 		super(props)
 		this.forumController = new ForumController()
 		this.state = { topic: {}, topicNotFound: false, replies: [] }
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.getForumTopic = this.getForumTopic.bind(this)
+		this.getForumTopicReplies = this.getForumTopicReplies.bind(this)
 	}
 
 	componentWillMount() {
+		this.getForumTopic()
+		this.getForumTopicReplies()
+	}
+
+	getForumTopic() {
 		let topicID = this.props.match.params.id
 		this.forumController.getForumTopic(topicID).then( (response) => {
 			response = JSON.parse(response.text)
@@ -26,7 +34,10 @@ class ForumTopic extends React.Component {
 		}).catch( (err) => {
 			this.setState({ topicNotFound: true })
 		})
+	}
 
+	getForumTopicReplies() {
+		let topicID = this.props.match.params.id
 		this.forumController.getForumTopicReplies(topicID).then( (response) => {
 			response = JSON.parse(response.text)
 			let replies = response.data
@@ -35,6 +46,14 @@ class ForumTopic extends React.Component {
 				this.setState({ replies: replies })
 			}
 		}).catch( (err) => console.log(err))
+	}
+
+	handleSubmit(event) {
+		let input = this.refs.commentInput.value
+		this.forumController.createForumTopicReply(this.props.match.params.id, input).then( (response) => {
+			this.getForumTopicReplies()
+			this.refs.commentInput.value = ''
+		})
 	}
 
 	render() {
@@ -49,6 +68,8 @@ class ForumTopic extends React.Component {
 				}
 				<h1>{this.state.topic.title}</h1>
 				{replies}
+				<input type='text' ref='commentInput' placeholder='Your comment'/>
+				<button className='rounded-button' onClick={this.handleSubmit}>Add a reply</button>
 			</section>
 		)
 	}
