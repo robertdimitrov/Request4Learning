@@ -720,7 +720,25 @@ function addQuestProgress() {
 			points: 6
 		})
 
-		QuestProgress.collection.insert([questProgress1, questProgress2, questProgress3, questProgress4], (err) => {
+		let questProgress5 = new QuestProgress({
+			cuid: 'cj7v379vw000004qkir2ohrwp',
+			questID: 'cj7kw5m87000404xfe2abb0nj',
+			teamID: 'cj7erlg3100030405hxwx56c3',
+			dateStarted: date.setDate(date.getDate() + 1),
+			dateFinished: date.setDate(date.getDate() + 2),
+			points: 3
+		})
+
+		let questProgress6 = new QuestProgress({
+			cuid: 'cj7v37e30000104qku2pf3ztf',
+			questID: 'cj7kw5m87000404xfe2abb0nj',
+			teamID: 'cj7erkxk6000104057wc8ba0o',
+			dateStarted: date.setDate(date.getDate() + 1),
+			dateFinished: date.setDate(date.getDate() + 2),
+			points: 3
+		})
+
+		QuestProgress.collection.insert([questProgress1, questProgress2, questProgress3, questProgress4, questProgress5, questProgress6], (err) => {
 			if (err) {
 				console.log('Couldnt create dummy Quest data')
 			}
@@ -807,14 +825,14 @@ function addQuestTypes() {
 
 		let singleQuestSolution1 = new PublicQuestSolution({
 			cuid: 'cj7ma1xq7000004uysn3nzox3',
-			questID: 'cj7kvmnws000304xfymng6rnz',
+			questID: 'cj7kw5m87000404xfe2abb0nj',
 			fileName: 'questSolution1.pdf',
 			teamID: 'cj7erkxk6000104057wc8ba0o'
 		})
 
 		let singleQuestSolution2 = new PublicQuestSolution({
 			cuid: 'cj7mfvpjy000004x63dgxun3z',
-			questID: 'cj7kvmnws000304xfymng6rnz',
+			questID: 'cj7kw5m87000404xfe2abb0nj',
 			fileName: 'questSolution2.pdf',
 			teamID: 'cj7erlg3100030405hxwx56c3'
 		})
