@@ -3,7 +3,10 @@ import React from 'react'
 class NotFound extends React.Component {
 	render() {
 		return (
-			<h2>NotFound</h2>
+			<div className='not-found'>
+				<h1>Page Not Found</h1>
+				<p>But this is only a prototype!</p>
+			</div>
 		)
 	}
 }

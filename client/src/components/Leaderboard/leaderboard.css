@@ -9,6 +9,6 @@
     padding: 8px;
 }
 
-.leaderboard tr:nth-child(even) {
+.leaderboard thead tr {
 	background-color: #efefef;
 }

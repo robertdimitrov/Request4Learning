@@ -1,0 +1,15 @@
+.course .informaitons p {
+	margin-bottom: 32px;
+}
+
+.course .announcements {
+	margin-top: 32px;
+}
+
+.course .announcement {
+	width: 100%;
+	border: 1px solid #eee;
+	padding: 0 8px;
+	height: 50px;
+	margin-bottom: 8px;
+}
