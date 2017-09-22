@@ -83,10 +83,10 @@ class Quest extends React.Component {
 						case 'pickTheWinner': return <PickTheWinnerQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
 						case 'jigsaw': return <JigsawQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
 						case 'token': return <TokenQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
-						case 'emptyOutlines': return <EmptyOutlinesQuest handleSubmit={this.handleSubmit}/>; break
-						case 'quiz': return <QuizQuest handleSubmit={this.handleSubmit}/>; break
-						case 'riddle': return <RiddleQuest handleSubmit={this.handleSubmit}/>; break
-						case 'order': return <OrderQuest handleSubmit={this.handleSubmit}/>; break
+						case 'emptyOutlines': return <EmptyOutlinesQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
+						case 'quiz': return <QuizQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
+						case 'riddle': return <RiddleQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
+						case 'order': return <OrderQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
 					}
 				})()}
 				{ this.state.answerSubmitted &&

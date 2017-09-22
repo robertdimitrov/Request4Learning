@@ -1,0 +1,10 @@
+.riddle-quest input {
+	display: block;
+	height: 30px;
+	padding: 8 16px;
+	margin-bottom: 32px;
+}
+
+.riddle-quest p {
+	margin-bottom: 24px;
+}
