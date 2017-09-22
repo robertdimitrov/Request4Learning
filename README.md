@@ -1,9 +1,9 @@
 # Request4Learning
 
-Dieser Prototyp wurde als Teil der Bachelorarbeit von Robert Dimitrov entwickelt.
+Dieser Prototyp wurde als Teil der Bachelorarbeit von Robert Dimitrov entwickelt. 
 
-Medieninformatik Bachelor
-Beuth Hochschule für Technik
+Medieninformatik Bachelor  
+Beuth Hochschule für Technik  
 SS2017
 
 
@@ -25,7 +25,7 @@ Node Dependencies installieren:
 npm install
 ```
 
-Server per ```npm``` starten:
+Server starten:
 
 ```bash
 npm start
@@ -47,7 +47,7 @@ Node Dependencies installieren:
 npm install
 ```
 
-Client per ```npm``` starten:
+Client starten:
 
 ```bash
 npm start
