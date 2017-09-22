@@ -81,8 +81,8 @@ class Quest extends React.Component {
 					switch(this.state.quest.type) {
 						case 'simple': return <SimpleQuest handleSubmit={this.handleSubmit}/>; break
 						case 'pickTheWinner': return <PickTheWinnerQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
-						case 'jigsaw': return <JigsawQuest handleSubmit={this.handleSubmit}/>; break
-						case 'token': return <TokenQuest handleSubmit={this.handleSubmit}/>; break
+						case 'jigsaw': return <JigsawQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
+						case 'token': return <TokenQuest quest={this.state.quest} handleSubmit={this.handleSubmit}/>; break
 						case 'emptyOutlines': return <EmptyOutlinesQuest handleSubmit={this.handleSubmit}/>; break
 						case 'quiz': return <QuizQuest handleSubmit={this.handleSubmit}/>; break
 						case 'riddle': return <RiddleQuest handleSubmit={this.handleSubmit}/>; break

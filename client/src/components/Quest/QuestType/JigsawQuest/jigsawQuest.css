@@ -1,0 +1,11 @@
+.jigsaw-quest input {
+	width: 100%;
+	display: block;
+	margin: 16px 0;
+	height: 100px;
+	padding: 8px 16px;
+}
+
+.jigsaw-quest p {
+	margin-bottom: 32px;
+}
