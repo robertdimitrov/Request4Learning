@@ -26,7 +26,6 @@ class Quest extends React.Component {
 		this.questController.getQuest(this.props.match.params.id).then( (response) => {
 			response = JSON.parse(response.text)
 			let quest = response.data
-			console.log(quest)
 			if (quest) {
 				this.setState({ quest: quest, questNotFound: false })
 			} else {

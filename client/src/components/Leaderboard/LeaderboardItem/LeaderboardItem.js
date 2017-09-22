@@ -11,12 +11,18 @@ class LeaderboardItem extends React.Component {
 		let questsSolved = this.props.team.questsSolved
 
 		return (
-			<tr className='leaderboard-item'>
-				<td><img className='avatar' src={'public/avatars/' + avatar} alt='team-avatar'/></td>
-				<td>{name}</td>
-				<td>{questsSolved}</td>
-				<td>{points}</td>
-			</tr>
+			<div className='leaderboard-item'>
+				<div className='leaderboard-item-team'>
+					<img className='avatar' src={'public/avatars/' + avatar} alt='team-avatar'/>
+					{name}
+				</div>
+				<div className='leaderboard-item-questsSolved'>
+					{questsSolved}
+				</div>
+				<div className='leaderboard-item-points'>
+					{points}
+				</div>
+			</div>
 		)
 	}
 }

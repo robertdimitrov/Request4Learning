@@ -31,19 +31,12 @@ class Leaderboard extends React.Component {
 		return (
 			<div className='leaderboard'>
 				<h1>Leaderboard</h1>
-				<table>
-					<thead>
-						<tr>
-							<th></th>
-							<th>Team</th>
-							<th>Quests Solved</th>
-							<th>Points</th>
-						</tr>
-					</thead>
-					<tbody>
-					{leaderboardItems}
-					</tbody>
-				</table>
+				<div className='leaderboard-item leaderboard-header'>
+					<div className='leaderboard-item-team'>Team</div>
+					<div className='leaderboard-item-questsSolved'>Quests Solved</div>
+					<div className='leaderboard-item-points'>Points</div>
+				</div>
+				{leaderboardItems}
 			</div>
 		)
 	}

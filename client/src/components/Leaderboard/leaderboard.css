@@ -1,14 +1,6 @@
-.leaderboard table {
-	border-collapse: collapse;
-    width: 100%;
-}
-
-.leaderboard td, .leaderboard th {
-	border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
-}
-
-.leaderboard thead tr {
-	background-color: #efefef;
+.leaderboard-header {
+	border-top: 1px solid #ddd;
+	border-bottom: 2px solid #ccc;
+	font-weight: 700;
+	color: #1b50c0;
 }
