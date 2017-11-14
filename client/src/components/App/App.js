@@ -21,37 +21,28 @@ class App extends React.Component {
 		this.forumController.getForumTopics().then( (response) => {
 			response = JSON.parse(response.text)
 			let forumTopics = response.data
-			console.log(forumTopics)
 			if (forumTopics) {
 				forumTopics = forumTopics.slice(0, Math.min(3, forumTopics.length))
 				this.setState({ lastForumTopics: forumTopics })
 			}
-		}).catch( (err) => {
-			console.log(err)
-		})
+		}).catch( (err) => {})
 
 		this.teamController.getTeamComments().then( (response) => {
 			response = JSON.parse(response.text)
 			let comments = response.data
-			console.log(comments)
 			if (comments) {
 				comments = comments.slice(0, Math.min(3, comments.length))
 				this.setState({ lastTeamComments: comments })
 			}
-		}).catch( (err) => {
-			console.log(err)
-		})
+		}).catch( (err) => {})
 
 		this.userController.getMe().then( (response) => {
 			response = JSON.parse(response.text)
 			let user = response.data
-			console.log(user)
 			if (user) {
 				this.setState({ user: user })
 			}
-		}).catch( (err) => {
-			console.log(err)
-		})
+		}).catch( (err) => {})
 	}
 
 	render() {	

@@ -5,7 +5,7 @@ import './notificationlist.css'
 
 class NotificationList extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 	}
 
 	render() {

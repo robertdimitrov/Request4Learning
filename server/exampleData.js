@@ -62,7 +62,7 @@ function addUsers() {
 
 		let user1 = new User({ 
 			cuid: 'cj7d7kob70001041a33i0ucr6', 
-			username: 'robert', 
+			username: 'student', 
 			password: '$2a$06$SQIFnMbp2Dlg7sd46tX2WOafpC9FsnG/22SBp2tm5oe9nllPPcQGS',
 			type: 'student',
 			avatarAssetName: 'avatar1.png',

@@ -19,8 +19,6 @@ class ForumTopic extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.data)
-
 		return (
 			<section className='forum-topic-reply'>
 				<div className='forum-topic-reply-meta'>

@@ -5,8 +5,6 @@ import './questListItem.css'
 class QuestListItem extends React.Component {
 
 	render() {
-		console.log(this.props.quest)
-
 		return (
 			<a href={'/quests/' + this.props.quest.cuid}>
 				<div className='quest-list-item'>

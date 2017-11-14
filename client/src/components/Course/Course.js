@@ -15,24 +15,18 @@ class Course extends React.Component {
 		this.courseController.getCourseInformation().then( (response) => {
 			response = JSON.parse(response.text)
 			let course = response.data
-			console.log(course)
 			if (course) {
 				this.setState({ course: course })
 			}
-		}).catch( (err) => {
-			console.log(err)
-		})
+		}).catch( (err) => {})
 
 		this.courseController.getCourseAnnouncements().then( (response) => {
 			response = JSON.parse(response.text)
 			let announcements = response.data
-			console.log(announcements)
 			if (announcements) {
 				this.setState({ courseAnnouncements: announcements })
 			}
-		}).catch( (err) => {
-			console.log(err)
-		})
+		}).catch( (err) => {})
 	}
 
 	render() {

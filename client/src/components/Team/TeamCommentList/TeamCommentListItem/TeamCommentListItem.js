@@ -8,7 +8,6 @@ class TeamCommentListItem extends React.Component {
 		let date = new Date(this.props.comment.dateAdded).toLocaleDateString()
 		let avatarSrc = '/public/avatars/' + this.props.comment.avatarAssetName
 		let publicName = this.props.comment.publicName
-		console.log(this.props.comment)
 
 		return (
 			<div className='team-comment-list-item'>

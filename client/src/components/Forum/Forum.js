@@ -23,7 +23,7 @@ class Forum extends React.Component {
 			if (topics) {
 				this.setState({ topics: topics })
 			}
-		}).catch( (err) => { console.log(err) })
+		})
 
 		this.forumController.getUsersWithMostReplies().then( (response) => {
 			response = JSON.parse(response.text)
@@ -31,7 +31,7 @@ class Forum extends React.Component {
 			if (mostReplies) {
 				this.setState({ mostReplies: mostReplies })
 			}
-		}).catch( (err) => { console.log(err) })
+		})
 
 		this.forumController.getUsersWithMostTutorials().then( (response) => {
 			response = JSON.parse(response.text)
@@ -39,7 +39,7 @@ class Forum extends React.Component {
 			if (mostTutorials) {
 				this.setState({ mostTutorials: mostTutorials })
 			}
-		}).catch( (err) => { console.log(err) })
+		})
 
 		this.forumController.getUsersWithMostMarkedAnswers().then( (response) => {
 			response = JSON.parse(response.text)
@@ -47,7 +47,7 @@ class Forum extends React.Component {
 			if (mostMarkedAnswers) {
 				this.setState({ mostMarkedAnswers: mostMarkedAnswers })
 			}
-		}).catch( (err) => { console.log(err) })
+		})
 	}
 
 	render() {

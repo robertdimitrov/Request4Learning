@@ -31,7 +31,7 @@ class ForumTopic extends React.Component {
 			} else {
 				this.setState({ topicNotFound: true })
 			}
-		}).catch( (err) => {
+		}).catch( () => {
 			this.setState({ topicNotFound: true })
 		})
 	}
@@ -41,16 +41,15 @@ class ForumTopic extends React.Component {
 		this.forumController.getForumTopicReplies(topicID).then( (response) => {
 			response = JSON.parse(response.text)
 			let replies = response.data
-			// console.log(replies)
 			if (replies) {
 				this.setState({ replies: replies })
 			}
-		}).catch( (err) => console.log(err))
+		}).catch( (err) => {})
 	}
 
-	handleSubmit(event) {
+	handleSubmit() {
 		let input = this.refs.commentInput.value
-		this.forumController.createForumTopicReply(this.props.match.params.id, input).then( (response) => {
+		this.forumController.createForumTopicReply(this.props.match.params.id, input).then( () => {
 			this.getForumTopicReplies()
 			this.refs.commentInput.value = ''
 		})

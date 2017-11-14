@@ -17,7 +17,6 @@ class PickTheWinnerQuest extends React.Component {
 		this.questController.getQuestSolutions(this.props.quest.cuid).then( (response) => {
 			response = JSON.parse(response.text)
 			let solutions = response.data
-			console.log(solutions)
 			if (solutions) {
 				this.setState({ solutions: solutions })
 			}
@@ -29,8 +28,6 @@ class PickTheWinnerQuest extends React.Component {
 		let solutions = this.state.solutions.map( s => {
 			return <PickTheWinnerQuestSolution key={s.teamID} solution={s}/>
 		})
-
-		console.log(solutions)
 
 		return (
 			<div className='pick-the-winner-quest'>

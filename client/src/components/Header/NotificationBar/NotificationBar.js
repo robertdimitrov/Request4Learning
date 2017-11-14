@@ -8,7 +8,7 @@ import './notificationBar.css'
 
 class NotificationBar extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.userController = new UserController()
 		this.state = { hasNotifications: false, notificationsCount: 0, showNotifications: false, notifications: [] }
 		this.handleClick = this.handleClick.bind(this)	
@@ -21,7 +21,7 @@ class NotificationBar extends React.Component {
 			if (notifications) {
 				this.setState({ hasNotifications: true, notificationsCount: notifications.length, notifications: notifications })
 			}
-		}).catch( (err) => {
+		}).catch( () => {
 			this.setState({ hasNotifications: false, notificationsCount: 0 })
 		})
 	}

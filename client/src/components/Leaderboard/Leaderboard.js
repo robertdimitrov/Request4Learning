@@ -16,7 +16,6 @@ class Leaderboard extends React.Component {
 		this.questController.getLeaderboard().then( (response) => {
 			response = JSON.parse(response.text)
 			let teams = response.data
-			console.log(teams)
 			if (teams) {
 				this.setState({ teams: teams })
 			}

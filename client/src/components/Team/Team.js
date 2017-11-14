@@ -26,7 +26,6 @@ class Team extends React.Component {
 		this.teamController.getTeamTasks().then( (response) => {
 			response = JSON.parse(response.text)
 			let tasks = response.data
-			console.log(tasks)
 			if (tasks) {
 				this.setState({ tasks: tasks })
 			}
@@ -37,7 +36,6 @@ class Team extends React.Component {
 		this.teamController.getTeamComments().then( (response) => {
 			response = JSON.parse(response.text)
 			let comments = response.data
-			console.log(comments)
 			if (comments) {
 				this.setState({ comments: comments })
 			}
@@ -49,27 +47,26 @@ class Team extends React.Component {
 	}
 
 	handleTaskSubmit() {
-		this.teamController.createTeamTask(this.refs.taskInput.value).then( (response) => {
+		this.teamController.createTeamTask(this.refs.taskInput.value).then( () => {
 			this.getTeamTasks()
 			this.refs.taskInput.value = ''
 		})
 	}
 
 	handleCommentSubmit() {
-		this.teamController.createTeamComment(this.refs.commentInput.value).then( (response) => {
+		this.teamController.createTeamComment(this.refs.commentInput.value).then( () => {
 			this.getTeamComments()
 			this.refs.commentInput.value = ''
 		})
 	}
 
 	handleTaskDelete(taskID) {
-		this.teamController.deleteTeamTask(taskID).then( (response) => {
+		this.teamController.deleteTeamTask(taskID).then( () => {
 			this.getTeamTasks()
 		})
 	}
 
 	render() {
-		console.log(this.state.activePage)
 		return (
 			<section className='team'>
 				<h1>Team</h1>
