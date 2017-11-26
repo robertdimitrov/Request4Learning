@@ -6,6 +6,10 @@ import AuthenticationController from './authentication'
 class UserController {
 	constructor() {
 		this.authenticationController = new AuthenticationController()
+		this.userData()
+	}
+
+	userData() {
 		this.user = this.authenticationController.decodeUser()
 	}
 
@@ -18,14 +22,15 @@ class UserController {
 	}
 
 	getMe(userID) {
+		this.userData()
 		return prepareRequest(Request.get(paths.users + '/' + this.user.id))
 	}
 
-	updateUser(userID, user) {
-		return prepareRequest(Request.patch(paths.users + '/' + this.user.id).send({ characterAssetName: user.characterAssetName, publicName: user.publicName }))
+	updateUser(userData) {
+		return prepareRequest(Request.patch(paths.users + '/' + this.user.id).send({ characterAssetName: userData.characterAssetName, publicName: userData.publicName }))
 	}
 
-	updateAvatar(userID, avatar) {
+	updateAvatar(avatar) {
 		return prepareRequest(Request.patch(paths.users + '/' + this.user.id + '/avatar').send({ avatar }))
 	}
 

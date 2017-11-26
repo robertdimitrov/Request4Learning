@@ -1,0 +1,92 @@
+.profile-configuration {
+	padding: 8px 24px;
+	width: 50%;
+}
+
+.profile-configuration h1 {
+	font-size: 2rem;
+}
+
+.profile-configuration h2 {
+	font-size: 1rem;
+}
+
+.profile-configuration p {
+	margin-bottom: 8px;
+}
+
+.profile-configuration div {
+	margin: 16px 0;
+}
+
+.profile-configuration label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.profile-configuration input:not([type="file"]) {
+	width: 100%;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0 8px;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+.profile-configuration button {
+	width: 100%;
+	margin: 24px 0 12px;
+}
+
+.profile-configuration .avatar-field {
+	display: flex;
+}
+
+.profile-configuration .avatar-image-wrapper {
+	flex: 1;
+}
+
+.profile-configuration .avatar {
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ddd;
+	transition: box-shadow .3s;
+}
+
+.profile-configuration .avatar:hover {
+	box-shadow: 0px 0px 8px 2px #ddd;
+}
+
+.profile-configuration .avatar img {
+	width: 100%;
+	height: 100%;
+}
+
+.profile-configuration .avatar-input-wrapper {
+	flex: 2;
+}
+
+.profile-configuration .character-field {
+	display: flex;
+}
+
+.profile-configuration .character-image-wrapper {
+	flex: 1;
+}
+
+.profile-configuration .character-input-wrapper {
+	flex: 2;
+}
+
+.profile-configuration .character {
+	width: 100px;
+}
+
+
+@media screen and (max-width: 800px) {
+	.profile-configuration {
+		width: 100%;
+		margin: 0;
+	}
+}
+

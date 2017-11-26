@@ -71,14 +71,14 @@ a {
 	display: none;
 }
 
-.signin {
+.centered-form {
 	width: 400px;
 	margin: 10% auto;
 	box-shadow: 0px 0px 8px 2px #ddd;
 	transition: box-shadow .3s;
 }
 
-.signin:hover {
+.centered-form:hover {
 	box-shadow: 0px 0px 12px 2px #ccc;
 }
 

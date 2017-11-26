@@ -1,6 +1,7 @@
 'use strict'
 
 const striptags = require('striptags')
+const async = require('async')
 
 const User = require('../models/user')
 const UserNotification = require('../models/userNotification')
@@ -61,36 +62,82 @@ module.exports.updateUser = (req, res, next) => {
 	if (!req.body.publicName && !req.body.characterAssetName) {
 		return next({ message: 'No user attributes sent', status: httpCodes.badrequest })
 	}
+	async.series([
+		function(query) {
+			User.findOne({ publicName: req.body.publicName}).exec( (err, user) => {
+				if (err) {
+					return next({ message: `Couldn't find user`, status: httpCodes.internalServerError})
+				}
+				if (user) {
+					return next({ message: `User with public name ${req.body.publicName} already exists`, status: httpCodes.conflict})
+				}
+				query()
+			})
+		},
+		function(query) {
+			User.findOne({ cuid: req.params.cuid }).exec( (err, user) => {
+				if (err) {
+					return next({message: err.message, status: httpCodes.badrequest})
+				}
 
-	if (req.body.publicName) {
-		User.findOne({ publicName: req.body.publicName}).exec( (err, user) => {
-			if (user) {
-				return next({ message: `User with public name ${req.body.publicName} already exists`, status: httpCodes.conflict})
-			}
-		})
-	}
+				if (!user) {
+					return next({ message: `User with id ${req.params.cuid} not found`, status: httpCodes.notfound })
+				}
 
-	User.findOne({ cuid: req.params.cuid }).exec( (err, user) => {
-		if (err) {
-			return next({message: err.message, status: httpCodes.badrequest})
+				user.publicName = striptags(req.body.publicName) || user.publicName
+				user.characterAssetName = striptags(req.body.characterAssetName) || user.characterAssetName
+				if (user.stage === 0) {
+					user.stage += 1
+				}
+
+				user.save( (err, updatedUser) => {
+					if (err) {
+						return next({ message: err.message, status: httpCodes.internalServerError })
+					}
+
+					res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
+				})
+
+			})
 		}
-		if (!user) {
-			return next({ message: `User with id ${req.params.cuid} not found`, status: httpCodes.notfound })
-		}
-
-		user.publicName = striptags(req.body.publicName) || user.publicName
-		user.characterAssetName = striptags(req.body.characterAssetName) || user.characterAssetName
-
-		user.save( (err, updatedUser) => {
-			if (err) {
-				return next({ message: err.message, status: httpCodes.internalServerError })
-			}
-
-			res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
-		})
-
-	})
+	])
 }
+
+// module.exports.updateUser = (req, res, next) => {
+// 	if (!req.body.publicName && !req.body.characterAssetName) {
+// 		return next({ message: 'No user attributes sent', status: httpCodes.badrequest })
+// 	}
+
+// 	if (req.body.publicName) {
+// 		User.findOne({ publicName: req.body.publicName}).exec( (err, user) => {
+// 			if (user) {
+// 				return next({ message: `User with public name ${req.body.publicName} already exists`, status: httpCodes.conflict})
+// 			}
+// 		})
+// 	}
+
+// 	User.findOne({ cuid: req.params.cuid }).exec( (err, user) => {
+// 		if (err) {
+// 			return next({message: err.message, status: httpCodes.badrequest})
+// 		}
+
+// 		if (!user) {
+// 			return next({ message: `User with id ${req.params.cuid} not found`, status: httpCodes.notfound })
+// 		}
+
+// 		user.publicName = striptags(req.body.publicName) || user.publicName
+// 		user.characterAssetName = striptags(req.body.characterAssetName) || user.characterAssetName
+
+// 		user.save( (err, updatedUser) => {
+// 			if (err) {
+// 				return next({ message: err.message, status: httpCodes.internalServerError })
+// 			}
+
+// 			res.status(httpCodes.success).json({ data: hideUserFields(user, req.user.id) })
+// 		})
+
+// 	})
+// }
 
 module.exports.updateAvatar = (req, res, next) => {
 	if (!req.file) {

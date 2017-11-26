@@ -47,7 +47,7 @@ class Signin extends React.Component {
 
 	render() {
 		return (
-			<div className='signin'>
+			<div className='signin centered-form'>
 				<img src='public/assets/logo.png' alt='logo'/>
 				<p className='center'>Welcome back!</p>
 				<p className='center lighter-text'>Please sign in to continue to Request4Learning:</p>

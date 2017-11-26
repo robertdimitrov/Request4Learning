@@ -9,8 +9,10 @@ class AuthenticationController {
 
 	decodeUser() {
 		let token = localStorage.getItem('jwt')
-		let decodedUser = jsonwebtoken.verify(token, 'REQUEST4LEARNING')
-		return decodedUser
+		if (token && token.length > 0) {
+			let decodedUser = jsonwebtoken.verify(token, 'REQUEST4LEARNING')
+			return decodedUser
+		}
 	}
 }
 
