@@ -1,0 +1,66 @@
+.team-invitations {
+	padding: 8px 24px;
+	width: 50%;
+	font-size: 1rem;
+}
+
+.team-invitations h1 {
+	font-size: 2rem;
+}
+
+.team-invitations h2 {
+	font-size: 1rem;
+}
+
+.team-invitations .open-invitations {
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	display: flex;
+	padding: 4px 12px;
+	margin: 0 0 32px 0;
+}
+
+.team-invitations .open-invitations p {
+	margin: 8px 0;
+}
+
+.invitation-info {
+	flex: 5;
+	margin: 0;
+}
+
+.invitation-button {
+	margin: 0;
+	flex: 1;
+	text-align: right;
+	color: #1B50C0;
+	font-weight: 700;
+}
+
+.invitation-button p {
+	cursor: pointer;
+}
+
+.invitation-button p:hover {
+	color: #1643A2;
+}
+
+.invitation-user {
+	display: flex;
+	border: 1px solid #ddd;
+	padding: 0px 12px;
+	margin: 4px 0;
+	cursor: pointer;
+}
+
+.invitation-user:hover {
+	box-shadow: 0px 0px 8px 2px #ddd;
+}
+
+@media screen and (max-width: 800px) {
+	.team-invitations {
+		width: 100%;
+		margin: 0;
+	}
+}
+

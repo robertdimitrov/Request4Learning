@@ -7,6 +7,7 @@ import './style.css'
 
 import Signin from './components/Signin/Signin'
 import ProfileConfiguration from './components/ProfileConfiguration/ProfileConfiguration'
+import TeamInvitation from './components/TeamInvitation/TeamInvitation'
 import routes from './routes'
 import UserController from './controllers/user'
 
@@ -16,6 +17,7 @@ class AppRouter extends React.Component {
 		this.state = {isLoggedIn: false, userStage: 0}
 		this.didSignin = this.didSignin.bind(this)
 		this.updateStage = this.updateStage.bind(this)
+		this.demoIncrementUserStage = this.demoIncrementUserStage.bind(this)
 		this.userController = new UserController()
 
 	}
@@ -33,11 +35,20 @@ class AppRouter extends React.Component {
 	}
 
 	updateStage() {
+		console.log('userStage update')
+
 		this.userController.getMe().then( (response) => {
 			response = JSON.parse(response.text)
 			let user = response.data
+			console.log('response')
+			console.log(user)
+			console.log(this.state.userStage)
 			this.setState({ userStage: user.stage })
 		})
+	}
+
+	demoIncrementUserStage() {
+		this.setState({ userStage: this.state.userStage + 1 })
 	}
 
 	render() {
@@ -46,6 +57,7 @@ class AppRouter extends React.Component {
 		}
 		switch (this.state.userStage) {
 			case 0: return <ProfileConfiguration updateStage={this.updateStage} />; break;
+			case 1: return <TeamInvitation demoIncrementUserStage={this.demoIncrementUserStage} />; break;
 			default: return (
 				<BrowserRouter>
 					{routes}

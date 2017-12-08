@@ -14,7 +14,7 @@ class ProfileConfiguration extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.userController.getMe().then( (response) => {
 			response = JSON.parse(response.text)
 			let user = response.data
@@ -34,12 +34,13 @@ class ProfileConfiguration extends React.Component {
 		this.setState({ character: event.target.value })
 	}
 
-	handleSubmit() {
-		
+	handleSubmit() {	
 		this.userController.updateUser({ publicName: this.state.publicName, characterAssetName: this.state.character }).then( (response) => {
 			this.props.updateStage()
 		}).catch( (err) => {
-			console.log(err.message)
+			if (err.message == 'Conflict') {
+				console.log(err)
+			}
 		})
 	}
 
@@ -61,6 +62,7 @@ class ProfileConfiguration extends React.Component {
 						<input id='avatar-select' name='avatar-select' type='file'/>
 					</div>
 				</div>
+				<div className='character-wrapper'>
 				<h2>Character</h2>
 				<div className='character-field'>
 					<div className='character-image-wrapper'>
@@ -73,6 +75,7 @@ class ProfileConfiguration extends React.Component {
 							<option value='character3.png'>Character 3</option>
 						</select>
 					</div>	
+				</div>
 				</div>
 				<div className='character-button'>
 					<button className='rounded-button rounder-button-full' onClick={this.handleSubmit}>Submit</button>

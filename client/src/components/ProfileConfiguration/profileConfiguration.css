@@ -66,6 +66,10 @@
 	flex: 2;
 }
 
+.profile-configuration .character-wrapper {
+	display: none;
+}
+
 .profile-configuration .character-field {
 	display: flex;
 }

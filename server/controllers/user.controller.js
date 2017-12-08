@@ -87,7 +87,7 @@ module.exports.updateUser = (req, res, next) => {
 				user.publicName = striptags(req.body.publicName) || user.publicName
 				user.characterAssetName = striptags(req.body.characterAssetName) || user.characterAssetName
 				if (user.stage === 0) {
-					user.stage += 1
+					user.stage = 1
 				}
 
 				user.save( (err, updatedUser) => {
