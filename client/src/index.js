@@ -8,6 +8,7 @@ import './style.css'
 import Signin from './components/Signin/Signin'
 import ProfileConfiguration from './components/ProfileConfiguration/ProfileConfiguration'
 import TeamInvitation from './components/TeamInvitation/TeamInvitation'
+import TeamConfiguration from './components/TeamConfiguration/TeamConfiguration'
 import routes from './routes'
 import UserController from './controllers/user'
 
@@ -58,6 +59,7 @@ class AppRouter extends React.Component {
 		switch (this.state.userStage) {
 			case 0: return <ProfileConfiguration updateStage={this.updateStage} />; break;
 			case 1: return <TeamInvitation demoIncrementUserStage={this.demoIncrementUserStage} />; break;
+			case 2: return <TeamConfiguration demoIncrementUserStage={this.demoIncrementUserStage} />; break;
 			default: return (
 				<BrowserRouter>
 					{routes}

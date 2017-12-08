@@ -38,9 +38,7 @@ class ProfileConfiguration extends React.Component {
 		this.userController.updateUser({ publicName: this.state.publicName, characterAssetName: this.state.character }).then( (response) => {
 			this.props.updateStage()
 		}).catch( (err) => {
-			if (err.message == 'Conflict') {
-				console.log(err)
-			}
+			console.log(err)
 		})
 	}
 
