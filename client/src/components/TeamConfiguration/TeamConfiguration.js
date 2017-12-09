@@ -24,7 +24,7 @@ class TeamConfiguration extends React.Component {
 
 	handleSubmit() {
 		this.teamController.updateTeam({ name: this.state.teamName, motto: this.state.teamMotto }).then( (response) => {
-			this.props.demoIncrementUserStage()
+			this.props.updateStage()
 		}).catch( (err) => {
 			console.log(err)
 		})

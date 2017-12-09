@@ -11,6 +11,8 @@ class TeamInvitation extends React.Component {
 		this.state = { users: [] }
 
 		this.userController = new UserController()
+		this.teamController = new TeamController()
+
 		this.handleAcceptClick = this.handleAcceptClick.bind(this)
 	}
 
@@ -23,8 +25,11 @@ class TeamInvitation extends React.Component {
 	}
 
 	handleAcceptClick() {
-		// only mockup
-		this.props.demoIncrementUserStage()
+		this.teamController.acceptTeamInvitationDemo().then( (response) => {
+			this.props.updateStage()
+		}).catch( (err) => {
+			console.log(err)
+		})
 	}
 
 	render() {

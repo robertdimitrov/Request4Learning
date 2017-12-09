@@ -61,6 +61,11 @@ class TeamController {
 	updateTeamInvitation(invitationID, status) {
 		return prepareRequest(Request.post(paths.teamInvitations + '/' + invitationID).send({ status }))
 	}
+
+	acceptTeamInvitationDemo() {
+		console.log('frontend controller sending')
+		return prepareRequest(Request.post(paths.acceptTeamInvitationDemo))
+	}
 }
 
 export default TeamController

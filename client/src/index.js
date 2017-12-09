@@ -18,7 +18,6 @@ class AppRouter extends React.Component {
 		this.state = {isLoggedIn: false, userStage: 0}
 		this.didSignin = this.didSignin.bind(this)
 		this.updateStage = this.updateStage.bind(this)
-		this.demoIncrementUserStage = this.demoIncrementUserStage.bind(this)
 		this.userController = new UserController()
 
 	}
@@ -48,9 +47,9 @@ class AppRouter extends React.Component {
 		})
 	}
 
-	demoIncrementUserStage() {
-		this.setState({ userStage: this.state.userStage + 1 })
-	}
+	// demoIncrementUserStage() {
+	// 	this.setState({ userStage: this.state.userStage + 1 })
+	// }
 
 	render() {
 		if (!this.state.isLoggedIn) {
@@ -58,8 +57,8 @@ class AppRouter extends React.Component {
 		}
 		switch (this.state.userStage) {
 			case 0: return <ProfileConfiguration updateStage={this.updateStage} />; break;
-			case 1: return <TeamInvitation demoIncrementUserStage={this.demoIncrementUserStage} />; break;
-			case 2: return <TeamConfiguration demoIncrementUserStage={this.demoIncrementUserStage} />; break;
+			case 1: return <TeamInvitation updateStage={this.updateStage} />; break;
+			case 2: return <TeamConfiguration updateStage={this.updateStage} />; break;
 			default: return (
 				<BrowserRouter>
 					{routes}
