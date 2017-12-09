@@ -21,15 +21,37 @@
 	flex: 1;
 }
 
-.quest-content {
-	margin: 32px 0;
-	border-bottom: 1px solid #ddd;
-}
-
 .quest-content p {
 	margin-bottom: 32px;
 }
 
 .submitted-info .icon {
 	color: #1b50c0;
+}
+
+.quest-state .submission-date{
+	margin-left: 12px;
+}
+
+.quest-content-wrapper {
+	display: flex;
+	border-bottom: 1px solid #ddd;
+	margin: 32px 0;
+}
+
+.quest-content {
+	flex: 2;
+}
+
+.quest-state {
+	flex: 1;
+}
+
+.quest-state h1 {
+	margin: 8px 0 24px;
+	font-size: 1.6rem;
+}
+
+.quest-state p {
+	margin: 8px 0;
 }

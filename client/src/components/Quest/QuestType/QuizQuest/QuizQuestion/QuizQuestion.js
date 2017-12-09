@@ -6,7 +6,7 @@ class QuizQuest extends React.Component {
 	render() {
 		let answers = this.props.data.answers.map( a => {
 			return (
-				<div className='quiz-question-answer'><input type='radio' name='answer'/>{a}</div>
+				<div className='quiz-question-answer' key={a}><input type='radio' name={this.props.data.question.cuid}/>{a}</div>
 			)
 		})
 

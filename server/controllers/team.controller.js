@@ -374,7 +374,6 @@ module.exports.updateTeamInvitation = (req, res, next) => {
 }
 
 module.exports.acceptTeamInvitationDemo = (req, res, next) => {
-	console.log('server found')
 	// only for demo purposes
 	User.findOne({ cuid: req.user.id}).exec( (err, user) => {
 		if (user.stage === 1) {
@@ -388,11 +387,4 @@ module.exports.acceptTeamInvitationDemo = (req, res, next) => {
 			res.status(httpCodes.success).end()
 		})
 	})
-
-	// User.update({ cuid: req.params.cuid }, { $inc: { stage: 1 } }, (err, updatedUser) => {
-	// 	if (err) {
-	// 		return next({message: err.message, status: httpCodes.internalServerError})  
-	// 	}
-	// 	res.status(httpCodes.success).end()
-	// })
 }

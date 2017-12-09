@@ -64,13 +64,22 @@ class Quest extends React.Component {
 						{this.state.quest.maxPoints}
 					</div>
 				</div>
-				<div className='quest-content'>
-					<h2 className='subtitle'>Description:</h2>
-					<p>{this.state.quest.description}</p>
-					<h2 className='subtitle'>Criteria:</h2>
-					<p>{this.state.quest.criteria}</p>
-					<h2 className='subtitle'>Resources:</h2>
-					<p>{this.state.quest.resources}</p>
+				<div className='quest-content-wrapper'>
+					<div className='quest-content'>
+						<h2 className='subtitle'>Description:</h2>
+						<p>{this.state.quest.description}</p>
+						<h2 className='subtitle'>Criteria:</h2>
+						<p>{this.state.quest.criteria}</p>
+						<h2 className='subtitle'>Resources:</h2>
+						<p>{this.state.quest.resources}</p>
+					</div>
+					<div className='quest-state'>
+						<h1>3d 8h left</h1>
+						<h2 className='subtitle'>Submitted:</h2>
+						<p>Team A <span className='lighter-text submission-date'>(11.12.2017 20:20)</span></p>
+						<p>Team B <span className='lighter-text submission-date'>(12.12.2017 09:31)</span></p>
+						<p>Team C <span className='lighter-text submission-date'>(13.12.2017 17:08)</span></p>
+					</div>
 				</div>
 				{ this.state.showQuestMaterials === false && this.state.answerSubmitted === false &&
 					<button className='rounded-button' onClick={this.handleStart}>Start Quest</button>
