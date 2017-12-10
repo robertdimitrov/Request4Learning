@@ -10,6 +10,7 @@ import Team from './components/Team/Team'
 import QuestList from './components/Quest/QuestList'
 import Quest from './components/Quest/Quest'
 import Leaderboard from './components/Leaderboard/Leaderboard'
+import Awards from './components/Awards/Awards'
 import NotFound from './components/NotFound/NotFound'
 
 export default (
@@ -25,6 +26,7 @@ export default (
 			<Route path='/quests/:id' component={Quest}/>
 			<Route path='/quests' component={QuestList}/>
 			<Route path='/leaderboard' component={Leaderboard}/>
+			<Route path='/awards' component={Awards}/>
 			<Route component={NotFound}/>
 		</Switch>
 		</div>

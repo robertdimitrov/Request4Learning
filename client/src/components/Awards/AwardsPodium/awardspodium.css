@@ -1,0 +1,88 @@
+.awards-podium {
+	display: flex;
+	height: 320px;
+	width: 100%;
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 8px 2px #eee;
+	transition: box-shadow .3s;
+}
+
+.awards-podium:hover {
+	box-shadow: 0px 0px 8px 2px #ccc;
+}
+
+.awards-podium > div {
+	position: relative;
+}
+
+.awards-second-place {
+	flex: 1;
+}
+
+.awards-first-place {
+	flex: 1;
+}
+
+.awards-third-place {
+	flex: 1;
+}
+
+.podium-box {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+.awards-second-place .podium-box{
+	background-color: #d1d1d1;
+	height: 90px;
+	color: #777;
+}
+
+.awards-first-place .podium-box{
+	background-color: #efe1b6;
+	height: 140px;
+	color: #bfac74;
+}
+
+.awards-third-place .podium-box{
+	background-color: #d6c5b8;
+	height: 60px;
+	color: #a38772;
+}
+
+.podium-box h1 {
+	text-align: center;
+	margin-top: 10px;
+	font-size: 2rem;
+}
+
+.participant {
+	width: 100%;
+	display: block;
+}
+
+.podium-avatar {
+	width: 100px;
+	height: 100px;
+	border: 1px solid #e0e0e0;
+	display: block;
+	margin: auto;
+}
+
+.podium-name {
+	text-align: center;
+	margin: 8px 0 0 0;
+}
+
+.awards-second-place .participant {
+	margin: 90px 0 0 0;
+}
+
+.awards-first-place .participant {
+	margin: 40px 0 0 0;
+}
+
+.awards-third-place .participant {
+	margin: 120px 0 0 0;
+}
