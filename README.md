@@ -56,6 +56,5 @@ npm start
 
 Der Client ist jetzt auf ```localhost:8080``` zu finden. Bei richtiger Verknüpfung mit der Datenbank kann man sich mit folgenden Zugansgdaten anmelden:
 
-- Benutzername: user
-- Benutzername: request
+- Benutzername: student
 - Password: request4learning
