@@ -13,6 +13,7 @@ const paths = {
 	leaderboard: '/leaderboard',
 	teams: '/teams',
 	teamInvitations: '/team-invitations',
+	acceptTeamInvitationDemo: '/team-invitations-accept-demo',
 	users: '/users'
 }
 

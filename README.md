@@ -35,11 +35,8 @@ Standardmäßig läuft der Server auf ```PORT 3000```. Diese Einstellung kann in
 
 ## Client starten
 
-<<<<<<< HEAD
 In einem neuen Tab der Kommandozeile in den ```client/``` Ordner navigieren:
-=======
 In den ```client/``` Ordner navigieren:
->>>>>>> 9aa98c688557dffe38ad8569fb2c95c289862403
 
 ```bash
 cd client
@@ -59,9 +56,6 @@ npm start
 
 Der Client ist jetzt auf ```localhost:8080``` zu finden. Bei richtiger Verknüpfung mit der Datenbank kann man sich mit folgenden Zugansgdaten anmelden:
 
-<<<<<<< HEAD
 - Benutzername: user
-=======
 - Benutzername: request
->>>>>>> 9aa98c688557dffe38ad8569fb2c95c289862403
 - Password: request4learning

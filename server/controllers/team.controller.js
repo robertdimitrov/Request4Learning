@@ -81,6 +81,9 @@ module.exports.updateTeam = (req, res, next) => {
 					return next({ message: `Team with id ${req.params.cuid} not found`, status: httpCodes.notfound })
 				}
 
+				user.stage += 1
+				user.save( (err, updatedUser) => {})
+
 				team.name = striptags(req.body.name) || team.name
 				team.motto = striptags(req.body.motto) || team.motto
 
@@ -368,4 +371,20 @@ module.exports.updateTeamInvitation = (req, res, next) => {
 				})
 		}
 	])
+}
+
+module.exports.acceptTeamInvitationDemo = (req, res, next) => {
+	// only for demo purposes
+	User.findOne({ cuid: req.user.id}).exec( (err, user) => {
+		if (user.stage === 1) {
+			user.stage = 2
+		}
+
+		user.save( (err) => {
+			if (err) {
+				return next({message: err.message, status: httpCodes.internalServerError})  
+			}
+			res.status(httpCodes.success).end()
+		})
+	})
 }

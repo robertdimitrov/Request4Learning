@@ -13,12 +13,16 @@ class LeaderboardItem extends React.Component {
 		return (
 			<div className='leaderboard-item'>
 				<div className='leaderboard-item-team'>
-					<img className='avatar' src={'public/avatars/' + avatar} alt='team-avatar'/>
-					{name}
+					{avatar &&
+						<img className='avatar' src={'public/avatars/' + avatar} alt='team-avatar'/>
+					}
+					<span className='leaderboard-team-name'>{name}</span>
 				</div>
+				{questsSolved && 
 				<div className='leaderboard-item-questsSolved'>
 					{questsSolved}
 				</div>
+				}
 				<div className='leaderboard-item-points'>
 					{points}
 				</div>

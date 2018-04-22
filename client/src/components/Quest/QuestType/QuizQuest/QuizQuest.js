@@ -16,7 +16,7 @@ class QuizQuest extends React.Component {
 		
 	render() {
 		let questions = this.props.quest.questData.map( (q,index) => {
-			return <QuizQuestion key={index} data={q}/>
+			return <QuizQuestion id={index} key={index} data={q}/>
 		})
 
 		return (

@@ -16,7 +16,7 @@ class Profile extends React.Component {
 				</div>
 				<p className='publicName'>{publicName}</p>
 				{ publicName !== username && 
-					<p className='smaller-text'>({username})</p>
+					<p className='smaller-text username'>({username})</p>
 				}
 			</div>
 		)

@@ -38,4 +38,7 @@ Router.route('/team-invitations')
 Router.route('/team-invitations/:invitationid')
 	.patch(TeamController.updateTeamInvitation)
 
+Router.route('/team-invitations-accept-demo')
+	.post(TeamController.acceptTeamInvitationDemo)
+
 module.exports = Router
