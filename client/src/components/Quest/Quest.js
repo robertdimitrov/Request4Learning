@@ -79,6 +79,8 @@ class Quest extends React.Component {
 						<p>Team A <span className='lighter-text submission-date'>(11.12.2017 20:20)</span></p>
 						<p>Team B <span className='lighter-text submission-date'>(12.12.2017 09:31)</span></p>
 						<p>Team C <span className='lighter-text submission-date'>(13.12.2017 17:08)</span></p>
+						<h2 className='subtitle quest-started'>Started:</h2>
+						<p>Team D <span className='lighter-text submission-date'>(10.12.2017 10:22)</span></p>
 					</div>
 				</div>
 				{ this.state.showQuestMaterials === false && this.state.answerSubmitted === false &&

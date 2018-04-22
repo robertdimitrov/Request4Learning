@@ -1113,35 +1113,35 @@ function addQuestTypes() {
 			cuid: 'cj7kygaho000r04xfqn5e0w6f',
 			questID: 'cj7kwbavf000a04xfpgviaxtv',
 			position: 1,
-			content: 'Single Responsibility'
+			content: "‘use strict’;"
 		})
 
 		let piece2 = new OrderQuestPiece({
 			cuid: 'cj7kyxwf4000s04xf2quzuma5',
 			questID: 'cj7kwbavf000a04xfpgviaxtv',
 			position: 2,
-			content: 'Open closed'
+			content: "var express = require(‘express’);"
 		})
 
 		let piece3 = new OrderQuestPiece({
 			cuid: 'cj7kyy00r000t04xfgmncuzue',
 			questID: 'cj7kwbavf000a04xfpgviaxtv',
 			position: 3,
-			content: 'Liskov substitution'
+			content: "app.use(express.static(path.join(__dirname, ‘public)));"
 		})
 
 		let piece4 = new OrderQuestPiece({
 			cuid: 'cj7kyy36p000u04xfqmsa2ikw',
 			questID: 'cj7kwbavf000a04xfpgviaxtv',
 			position: 4,
-			content: 'Interface segregation'
+			content: "app.get(‘/test’, function(req, res, next) { res.status(240).end() });"
 		})
 
 		let piece5 = new OrderQuestPiece({
 			cuid: 'cj7kyy669000v04xfd9pa77cf',
 			questID: 'cj7kwbavf000a04xfpgviaxtv',
 			position: 5,
-			content: 'Dependency inversion'
+			content: "app.listen(3000, function(err) { /* … */ });;"
 		})
 
 		OrderQuestPiece.collection.insert([piece1, piece2, piece3, piece4, piece5], (err) => {

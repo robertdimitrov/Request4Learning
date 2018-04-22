@@ -19,13 +19,13 @@ export default (
 		<div className='content'>
 		<Switch>
 			<Route exact={true} path='/' component={App}/>
-			<Route path='/forum/:id' component={ForumTopic}/>
+			<Route path='/forum/:id' component={ForumTopic}/>                                                                                     	
 			<Route path='/forum' component={Forum}/>
-			<Route path='/course' component={Course}/>
+			<Route path='/course' component={Course}/>                                                                                              
 			<Route path='/team' component={Team}/>
-			<Route path='/quests/:id' component={Quest}/>
+			<Route path='/quests/:id' component={Quest}/>                                  															
 			<Route path='/quests' component={QuestList}/>
-			<Route path='/leaderboard' component={Leaderboard}/>
+			<Route path='/leaderboard' component={Leaderboard}/>																					
 			<Route path='/awards' component={Awards}/>
 			<Route component={NotFound}/>
 		</Switch>

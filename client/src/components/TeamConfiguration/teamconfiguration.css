@@ -1,13 +1,14 @@
 .team-configuration {
 	padding: 8px 24px;
 	width: 50%;
+	margin: 5% auto;
 }
 
 .team-configuration h1 {
 	font-size: 2rem;
 }
 
-.team-configurationh2 {
+.team-configuration h2 {
 	font-size: 1rem;
 }
 

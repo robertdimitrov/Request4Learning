@@ -47,6 +47,10 @@
 	flex: 1;
 }
 
+.quest-started {
+	margin-top: 24px;
+}
+
 .quest-state h1 {
 	margin: 8px 0 24px;
 	font-size: 1.6rem;
